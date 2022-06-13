@@ -7,9 +7,9 @@ export const Main = () => {
         <>
             <br/>
             <h1>환영합니다</h1>
-            <Link to="/inputform"><button>test입력하러가기</button></Link><br/>
-            <Link to="/patientinputform"><button>신규환자등록</button></Link><br/>
-            <Link to="/patientlist"><button>환자목록보기</button></Link><br/>
+            <Link to="/shelter"><button>구호소</button></Link><br/>
+            <Link to="/supplies"><button>보급품</button></Link><br/>
+            <Link to="/victim"><button>이재민</button></Link><br/>
         </>
     )
 
