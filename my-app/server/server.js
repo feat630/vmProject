@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const router = require('./routes/router');
+const shelter = require('./routes/shelter')
+const victim = require('./routes/victim')
+const supplies = require('./routes/supplies')
 const cors = require('cors');
 
 const app = express();
@@ -15,6 +18,9 @@ app.use(cors({
     }));
 
 app.use("/", router);
+app.use("/shelter", shelter);
+app.use("/victim", victim);
+app.use("/supplies", supplies);
 
 app.listen(PORT, () => {
     console.log(`Check out the app at http://localhost:${PORT}`);
