@@ -26,8 +26,7 @@ export const Main = () => {
             <br></br>
             
             <Link to="/supplies/input"><button  className ="add-btn">등록</button></Link> &nbsp;&nbsp;
-            <Link to="/supplies/view/:id"><button    className ="change-btn">수정</button> </Link> <br/><p></p>
-
+            
             <table style={{marginTop:-10}} className="tablelist">
               <thead >
               <tr>
