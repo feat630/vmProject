@@ -11,16 +11,14 @@ export const View= () => {
     
 
     const fetchDatas = async() => {
-        const response = await axios.get('http://localhost:4000/getData');
+        const response = await axios.get('http://localhost:4000/supplies/main');
         setRead(response.data);
     }
 
-    const dataInsert = () => {
+    const dataChange = () => {
         console.log(name);
         console.log(quantity);
        
-
-
 		axios.post('http://localhost:4000/postData',{
 			data: {'data': [
                 name,
@@ -46,11 +44,7 @@ export const View= () => {
         }
 	}
 
-    const onReset = () => {
-        setName("");
-        setQuantity("");
-    }
-
+  
     useEffect(() => {
         fetchDatas();
     },[]);
@@ -58,7 +52,7 @@ export const View= () => {
     return (
         <>
         <br></br>
-          <center>배급품명:<input
+          <center id="name">배급품명 : <input
                 className="name-input"
                 type='text'
                 placeholder='배급품명'
@@ -66,8 +60,8 @@ export const View= () => {
                 onChange={getValue}
                 name='name'
             >
-            </input><br/></center>
-            <center>&emsp;&ensp;&nbsp;&nbsp;수량:<input
+            </input><br/><br></br></center>
+            <center id="quantity">&emsp;&ensp;&nbsp;&nbsp;수량 : <input
                     className="quantity-input"
                     type='text'
                     placeholder='수량'
@@ -77,9 +71,10 @@ export const View= () => {
                 >
                 </input><br/></center>
                 <br></br>
-            <Link to="/supplies/view"><button onClick={() => {dataInsert(); onReset()}}>변경</button></Link>&nbsp;&nbsp;
-            <Link to="/supplies/main"><button onClick={() => {dataInsert(); onReset()}}>삭제</button></Link>&nbsp;&nbsp;
-            <Link to="/supplies/main"><button>취소</button></Link><br></br>
+                <br></br><br></br>
+            <Link to="/supplies/main"><button className ="add-btn" onClick={() => {dataChange();  alert('변경되었습니다')}}>변경</button></Link>&nbsp;&nbsp;
+            <Link to="/supplies/main"><button className="cancel-btn">취소</button></Link><br></br>
+            <br></br>
             <br/>
 
             

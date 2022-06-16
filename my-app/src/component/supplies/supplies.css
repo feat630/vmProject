@@ -1,0 +1,58 @@
+table { 
+  border-collapse: collapse !important; 
+  border-spacing: 0px; 
+  margin:auto;
+}
+
+table tbody td  { border-collapse: collapse;  
+border-spacing: 200px; 
+text-align:center; 
+margin-right:auto; margin-left:auto;
+font-size:20px;
+padding-top: 10px;
+padding-bottom: 20px;
+padding-left: 10px;
+}
+
+thead          {
+ text-align:center !important;
+  font-weight: bold;
+  font-size:25px;
+  border-collapse: collapse;  
+ border-spacing: 200px; 
+  border-style:solid 2px;
+  height:40px;
+  background-color:#C4C4C4;
+padding-top: 10px;
+padding-bottom: 20px;
+padding-left: 30px;
+}
+
+thead th        {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.add-btn , .cancel-btn,.change-btn{
+    border-radius:10px;
+  background-color:white;
+  color: black;
+  width: 90px;
+}
+
+.name-input, .quantity-input {
+    width: 300px;
+    height:30px;
+    border: 1px solid;
+    border-color:  #E1E1E1;
+    border-radius: 10px;
+}
+.warn{
+    color: skyblue;
+    font-weight:bold;
+}
+
+#name, #quantity{
+    font-weight: bold;
+}
+
