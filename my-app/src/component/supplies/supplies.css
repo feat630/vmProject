@@ -4,7 +4,7 @@ table {
   margin:auto;
 }
 
-table tbody td  { border-collapse: collapse;  
+table tbody td  { border-collapse: collapse ! important;  
 border-spacing: 200px; 
 text-align:center; 
 margin-right:auto; margin-left:auto;
@@ -18,9 +18,10 @@ thead          {
  text-align:center !important;
   font-weight: bold;
   font-size:25px;
-  border-collapse: collapse;  
+  border-collapse: collapse !important;
  border-spacing: 200px; 
   border-style:solid 2px;
+  width: 1000px;
   height:40px;
   background-color:#C4C4C4;
 padding-top: 10px;
@@ -38,6 +39,12 @@ thead th        {
   background-color:white;
   color: black;
   width: 90px;
+}
+
+.name-btn{
+  border-style:none;
+  width: 80px;
+  height:30px;
 }
 
 .name-input, .quantity-input {

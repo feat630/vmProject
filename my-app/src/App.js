@@ -27,7 +27,7 @@ render() {
             <Route path="/shelter" element={<ShelterMain />}></Route>
             <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
             <Route path="/supplies/input" element={<SuppliesInput />}></Route>
-            <Route path="/supplies/view/:no" element={<SuppliesView />}></Route>
+            <Route path="/supplies/detail/:no" element={<SuppliesView />}></Route>
             <Route path="/victim" element={<VictimMain />}></Route>
           </Routes>
           <Footer/>

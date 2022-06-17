@@ -51,7 +51,7 @@ const fetchDatas =async() => {
     return (
         <>
         <br></br>
-          <center>
+          <center id="name">
                 배급품명* : <input
                 className="name-input"
                 type='text'
@@ -61,7 +61,7 @@ const fetchDatas =async() => {
                 name='name'
             >
             </input><br/><br></br></center>
-            <center>&emsp;&ensp;&nbsp;&nbsp;수량* : <input
+            <center id="quantity">&emsp;&ensp;&nbsp;&nbsp;수량* : <input
                     className="quantity-input"
                     type='text'
                     placeholder='수량'

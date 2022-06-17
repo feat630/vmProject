@@ -26,14 +26,15 @@ supplies.get('/main', (req,res) => {
 })*/
 
 
-supplies.get('/view/:id', (req,res) => {
-    const suppliesId = req.params.id;
-    db.query("select * from supplies where suppliesId = ?", [suppliesId], (err, rows) => {
+supplies.get('/detail/:id', (req,res) => {
+    const no = req.params.id;
+    db.query("select * from supplies where no = ?", [no], (err, rows) => {
         if(!err) {
             res.send(rows);
         } else {
             console.log(`query error: ${err}`);
             res.send(err);
+            alert("상세정보를 가져오기 실패했습니다.")
         }
       }
     );

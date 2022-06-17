@@ -3,7 +3,7 @@ import React ,{useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./supplies.css";
-//import View from "./View";
+import View from "./View";
 
 export const Main = () => {
         const [read,setRead] = useState([]);
@@ -28,7 +28,7 @@ export const Main = () => {
             <Link to="/supplies/input"><button  className ="add-btn">등록</button></Link> &nbsp;&nbsp;
             <br></br>
             <br></br>
-            
+
             <table style={{marginTop:-10}} className="tablelist">
               <thead >
               <tr>
@@ -40,10 +40,10 @@ export const Main = () => {
 
               <tbody>
                {read.map((supplies) => (
-                <tr>
-                <td key={supplies.no}>{supplies.no}</td>
-                <td key={supplies.name}><Link to={`/supplies/view ${supplies.name}`}>{supplies.name}</Link></td>
-                <td key={supplies.quantity}>{supplies.quantity}</td>
+                <tr key={supplies.no}>
+                <td >{supplies.no}</td>
+                <td ><Link to={`/supplies/detail/${supplies.no}`}><button  className="name-btn">{supplies.name}</button></Link></td>
+                <td >{supplies.quantity}</td>
                 </tr>
                ))
                }
