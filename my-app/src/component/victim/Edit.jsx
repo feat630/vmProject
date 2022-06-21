@@ -73,7 +73,7 @@ const Edit = (props) => {
           </td>
           <td>
             <input
-              className="name-input"
+              className="name-input-victim"
               type="text"
               placeholder="이름"
               value={name}
