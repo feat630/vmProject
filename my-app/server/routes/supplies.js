@@ -60,22 +60,49 @@ supplies.post('/input', (req, res) => {
     })
 })
 
-
-
-supplies.delete('/deleteData', (req, res) => {
+supplies.post('/update', (req, res) => {
     const name = req.body.data.data[0];
     const quantity = req.body.data.data[1];
-    
-    console.log(name)
-    console.log(quantity)
 
-    db.query("delete from supplies where name = ? and quantity = ?", [name, quantity], (err, rows) => {
+    console.log(name);
+    console.log(quantity);
+   
+    const success =true;
+ 
+     db.query("update supplies set name=? , quantity =? where no=?", [no], (err, rows) => {
+        const no = req.params.id;
+       console.log(no);
+
+        if(!err) {
+             res.send(success);
+             console.log('success')
+         } else {
+             console.log(`query error: ${err}`);
+             res.send(err);
+             alert("변경 실패했습니다.")
+         }
+     })
+ })
+
+supplies.delete('/delete/:id', (req, res) => {
+   const no = req.params.id;
+   console.log(no);
+   // const name = req.body.data.data[0];
+    //const quantity = req.body.data.data[1];
+    
+    //console.log(name)
+   //console.log(quantity)
+
+   const success =true;
+
+    db.query("delete from supplies where no=?", [no], (err, rows) => {
         if(!err) {
             res.send(success);
             console.log('success')
         } else {
             console.log(`query error: ${err}`);
             res.send(err);
+            alert("삭제하기 실패했습니다.")
         }
     })
 })

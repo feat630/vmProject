@@ -34,7 +34,7 @@ thead th        {
   text-align: center;
 }
 
-.add-btn , .cancel-btn,.change-btn{
+.add-btn , .cancel-btn,.change-btn ,.delete-btn{
     border-radius:10px;
   background-color:white;
   color: black;

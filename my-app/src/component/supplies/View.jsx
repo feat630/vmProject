@@ -5,9 +5,9 @@ import "./supplies.css";
 
 const View = (props) => {
   const [supplies, setSupplies] = useState([]);
-  const[name,setName] = useState('')
-  const[quantity,setQuantity] = useState('')
-  const{ changeInput,resetForm} =props 
+  const[name,setName] = useState("")
+  const[quantity,setQuantity] = useState("")
+  console.log(supplies);
 
   let { no } = useParams();
    console.log(supplies);
@@ -17,29 +17,48 @@ const View = (props) => {
     const response = await axios.get(
       `http://localhost:4000/supplies/detail/${no}`
     );
+   // setSupplies(response.data);
     setSupplies(response.data[0]);
   };
 
-   const saveBtnClick =(e) => {
-    console.log(e) ; 
-    e.preventDefault(0);
-
-    const _inputData = {
-        no:'',
-        name:name,
-        quantity:quantity
-    }
-   onmouseleave(_inputData);
-   resetForm();
-}
+   
   
- const handleName =(e) => {
-    setName(e.target.value)
- }
+// const handleName =(e) => {
+ //   setName(e.target.value)
+// }
 
- const handleQuantity =(e) => {
-    setQuantity(e.target.value)
- }
+ //const handleQuantity =(e) => {
+ //   setQuantity(e.target.value)
+ //}
+
+ const dataChange = () => {
+  console.log(name);
+  console.log(quantity);
+  
+
+  axios.post( `http://localhost:4000/supplies/update`,{
+    data: {'data': [name, quantity]}
+  });
+  console.log(name);
+  fetchData();
+}
+
+ const dataDelete = () => {
+  console.log(name);
+  console.log(quantity);
+  
+
+  axios.delete( `http://localhost:4000/supplies/delete/${no}`,{
+     // data: {'data': [no]}
+  });
+  console.log(name);
+  fetchData();
+}
+
+const onReset = () => {
+  setName("");
+  setQuantity("");
+}
 
   useEffect(() => {
     fetchData();
@@ -48,11 +67,11 @@ const View = (props) => {
   return (
     <>
     <br></br>
-    <form onSubmit = {saveBtnClick} >
+    <form>
       <center id="name">
       배급품명* : <input
       className="name-input"
-      onChange = {handleName}
+      onChange={(e) => setName(e.target.value)}
       type='text'
       value={supplies.name}
       name='name'
@@ -60,7 +79,7 @@ const View = (props) => {
   </input><br/><br></br></center>
   <center id="quantity">&emsp;&ensp;&nbsp;&nbsp;수량* : <input
           className="quantity-input"
-          onchange ={handleQuantity}
+          onChange={(e) => setQuantity(e.target.value)}
           type='text'
           value={supplies.quantity}
           name='quantity'
@@ -69,9 +88,12 @@ const View = (props) => {
       <br></br>
                 <br></br><br></br>
                 <center>
-                <input type="hidden" name="no-input" onChange={changeInput} value={supplies.no} />
-           <Link to="/supplies/main"><button  type="submit" className ="add-btn" onClick={() => {/*dataChange(); */ alert('변경되었습니다')}}>변경</button></Link>&nbsp;&nbsp;
-            <Link to="/supplies/main"><button className="cancel-btn">취소</button></Link><br></br>
+
+           <Link to="/supplies/main"><button  type="submit" className ="add-btn" onClick={() => {dataChange(); alert('변경되었습니다')}}>변경</button></Link>&nbsp;&nbsp;
+            <Link to="/supplies/main"><button className="cancel-btn">취소</button></Link>&nbsp;&nbsp;
+            <Link to="/supplies/main"><button className="delete-btn"  onClick={() => {dataDelete(); onReset()}}>삭제</button></Link>
+            <br></br>
+
       </center>
       </form>
  <br></br>
