@@ -7,12 +7,15 @@ import VictimInput from "./component/victim/Input";
 import VictimView from "./component/victim/View";
 import VictimUpdate from "./component/victim/Edit";
 
+import SuppliesMain from "./component/supplies/Main";
+import SuppliesInput from "./component/supplies/Input";
+import SuppliesView from "./component/supplies/View";
+
 import Main from "./component/Main";
 import Login from "./component/Login";
 import ShelterMain from "./component/shelter/Main";
 import ShelterView from "./component/shelter/View";
 import ShelterInput from "./component/shelter/Input";
-import SuppliesMain from "./component/supplies/Main";
 
 import TopMenu from "./component/TopMenu";
 import Footer from "./component/Footer";
@@ -55,6 +58,12 @@ class App extends Component {
               element={<ShelterInput />}
             ></Route>
             <Route path="/supplies" element={<SuppliesMain />}></Route>
+            <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
+            <Route path="/supplies/input" element={<SuppliesInput />}></Route>
+            <Route
+              path="/supplies/detail/:no"
+              element={<SuppliesView />}
+            ></Route>
             <Route path="/victim" element={<VictimMain />}></Route>
           </Routes>
           <Footer />
