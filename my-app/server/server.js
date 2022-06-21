@@ -1,10 +1,14 @@
 const express = require('express');
 const path = require('path');
 const router = require('./routes/router');
+<<<<<<< HEAD
 const shelter = require('./routes/shelter')
 const victim = require('./routes/victim')
 const supplies = require('./routes/supplies')
 const login = require('./routes/login')
+=======
+const supplies = require('./routes/supplies');
+>>>>>>> vmSupplies
 const cors = require('cors');
 
 
@@ -59,10 +63,14 @@ app.use(
 
 
 app.use("/", router);
+<<<<<<< HEAD
 app.use("/shelter", shelter);
 app.use("/victim", victim);
 app.use("/supplies", supplies);
 app.use("/login", login);
+=======
+app.use("/supplies", supplies);
+>>>>>>> vmSupplies
 
 app.listen(PORT, () => {
     console.log(`Check out the app at http://localhost:${PORT}`);
