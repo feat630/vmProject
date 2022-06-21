@@ -1,27 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require("../dbconnection");
 
-router.get('/getData', (req,res) => {
-<<<<<<< HEAD
-    
-    if (req.session.num === undefined) {
-        req.session.num = 1;
+router.get("/getData", (req, res) => {
+  if (req.session.num === undefined) {
+    req.session.num = 1;
+  } else {
+    req.session.num += 1;
+  }
+  console.log(req.session);
+  db.query("select * from login", (err, rows) => {
+    if (!err) {
+      res.send(rows);
     } else {
-        req.session.num += 1;
+      console.log(`query error: ${err}`);
+      res.send(err);
     }
-    console.log(req.session);
-=======
->>>>>>> vmSupplies
-    db.query("select * from login", (err, rows) => {
-        if(!err) {
-            res.send(rows);
-        } else {
-            console.log(`query error: ${err}`);
-            res.send(err);
-        }
-    })
-})
+  });
+});
 
 // router.get('/getPatient', (req,res) => {
 //     db.query("select * from patient_list order by key_value", (err, rows) => {
@@ -148,4 +144,4 @@ router.get('/getData', (req,res) => {
 //     })
 // })
 
-module.exports =router;
+module.exports = router;
