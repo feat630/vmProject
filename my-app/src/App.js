@@ -29,9 +29,27 @@ class App extends Component {
         <BrowserRouter>
           <TopMenu />
           <Routes>
-            <Route exact path="/" element={<Main />}></Route>
-            <Route exact path="/shelter" element={<ShelterMain />}></Route>
-            <Route exact path="/supplies" element={<SuppliesMain />}></Route>
+
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/main" element={<Main />}></Route>
+
+            <Route path="/shelter" element={<ShelterMain />}></Route>
+            <Route path="/shelter/:index" element={<ShelterView />}></Route>
+            <Route path="/shelter/input" element={<ShelterInput />}></Route>
+            <Route
+              path="/shelter/input/:index"
+              element={<ShelterInput />}
+            ></Route>
+            
+            <Route path="/supplies" element={<SuppliesMain />}></Route>
+            <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
+            <Route path="/supplies/input" element={<SuppliesInput />}></Route>
+            <Route
+              path="/supplies/detail/:no"
+              element={<SuppliesView />}
+            ></Route>
+            
+            
             <Route exact path="/victim" element={<VictimMain />}></Route>
             <Route
               exact
@@ -48,23 +66,7 @@ class App extends Component {
               path="/victim/update/:id"
               element={<VictimUpdate />}
             ></Route>
-            <Route path="/" element={<Login />}></Route>
-            <Route path="/main" element={<Main />}></Route>
-            <Route path="/shelter" element={<ShelterMain />}></Route>
-            <Route path="/shelter/:index" element={<ShelterView />}></Route>
-            <Route path="/shelter/input" element={<ShelterInput />}></Route>
-            <Route
-              path="/shelter/input/:index"
-              element={<ShelterInput />}
-            ></Route>
-            <Route path="/supplies" element={<SuppliesMain />}></Route>
-            <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
-            <Route path="/supplies/input" element={<SuppliesInput />}></Route>
-            <Route
-              path="/supplies/detail/:no"
-              element={<SuppliesView />}
-            ></Route>
-            <Route path="/victim" element={<VictimMain />}></Route>
+            
           </Routes>
           <Footer />
         </BrowserRouter>

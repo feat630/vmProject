@@ -20,7 +20,7 @@ export const TopMenu = () => {
 
     useEffect(() => {
         fetchDatas();
-    },[]);
+    },[isLogin]);
 
 
     if(isLogin) {
