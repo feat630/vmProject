@@ -69,7 +69,7 @@ const View = (props) => {
           배급품명* :{" "}
           <input
             className="name-input"
-            onChange={(e) => setName(e.target.value)}
+            onChange={getValue}
             type="text"
             value={supplies.name}
             name="name"
@@ -81,7 +81,7 @@ const View = (props) => {
           &emsp;&ensp;&nbsp;&nbsp;수량* :{" "}
           <input
             className="quantity-input"
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={getValue}
             type="text"
             value={supplies.quantity}
             name="quantity"
