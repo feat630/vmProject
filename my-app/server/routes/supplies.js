@@ -69,7 +69,7 @@ supplies.post('/update', (req, res) => {
    
     const success =true;
  
-     db.query("update supplies set name=? , quantity =? where no=?", [no], (err, rows) => {
+     db.query("update supplies set name=? , quantity =? where no=?", [name, quantity, no], (err, rows) => {
         const no = req.params.id;
        console.log(no);
 
