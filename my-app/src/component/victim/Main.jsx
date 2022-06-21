@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import View from "./View";
+import "./victim.css";
 
 export const Main = () => {
   const [victims, setVictims] = useState([]);
@@ -25,16 +26,16 @@ export const Main = () => {
   return (
     <>
       <br />
-      <h1>이재민</h1>
+      <h1>이재민 리스트</h1>
       {selectedVictim && <View victim={selectedVictim} />}
       <Link to="/victim/register">
-        <button>이재민 등록</button>
+        <button className="victim-btn">이재민 등록</button>
       </Link>
       <Link to="/shelter">
-        <button>구호소 등록</button>
+        <button className="victim-btn">구호소 등록</button>
       </Link>
       <br />
-      <table className="victim-view-wrapper">
+      <table className="victim-table">
         <thead>
           <tr>
             <th>No.</th>
@@ -49,7 +50,7 @@ export const Main = () => {
               <td>{victim.victim_id}</td>
               <td>
                 <Link to={`/victim/detail/${victim.victim_id}`}>
-                  <button>{victim.name}</button>
+                  <div>{victim.name}</div>
                 </Link>
               </td>
               <td>{victim.gender}</td>

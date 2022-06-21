@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Main from "./component/Main";
@@ -8,6 +8,7 @@ import SuppliesMain from "./component/supplies/Main";
 import VictimMain from "./component/victim/Main";
 import VictimInput from "./component/victim/Input";
 import VictimView from "./component/victim/View";
+import VictimUpdate from "./component/victim/Edit";
 
 import TopMenu from "./component/TopMenu";
 import Footer from "./component/Footer";
@@ -34,6 +35,11 @@ class App extends Component {
               exact
               path="/victim/detail/:id"
               element={<VictimView />}
+            ></Route>
+            <Route
+              exact
+              path="/victim/update/:id"
+              element={<VictimUpdate />}
             ></Route>
           </Routes>
           <Footer />
