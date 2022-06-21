@@ -66,7 +66,7 @@ const View = (props) => {
       <br></br>
       <form>
         <center id="name">
-          배급품명* :{" "}
+          배급품 이름* :{" "}
           <input
             className="name-input"
             onChange={getValue}
@@ -78,7 +78,7 @@ const View = (props) => {
           <br></br>
         </center>
         <center id="quantity">
-          &emsp;&ensp;&nbsp;&nbsp;수량* :{" "}
+          &emsp;&ensp;&nbsp;&nbsp; 물품수량* :{" "}
           <input
             className="quantity-input"
             onChange={getValue}

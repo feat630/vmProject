@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export const Input= () => {
     const [read,setRead] =useState([]);
+    const [type, setType] =useState([]);
     const [name, setName] = useState([]);
     const [quantity, setQuantity] = useState([]);
    
@@ -15,7 +16,8 @@ const fetchDatas =async() => {
     const dataInsert = () => {
         console.log(name);
         console.log(quantity);
-        if (name === "" || quantity === "") {
+        console.log(type);
+        if (name === "" || quantity === "" || type === "")  {
             alert('입력안된거있으니 확인 ㄱㄱ ')
            } else {
             alert('등록성공ㅎㅎㅎㅎ')
@@ -51,16 +53,28 @@ const fetchDatas =async() => {
     return (
         <>
         <br></br>
-          <center id="name">
-                배급품명* : <input
-                className="name-input"
+          <center id="type">
+                구분 : <input
+                className="type-input"
                 type='text'
-                placeholder='배급품명'
+                placeholder='구분'
                 value={name}
                 onChange={getValue}
-                name='name'
+            
             >
             </input><br/><br></br></center>
+
+            <center id="name">
+            배급품 이름 : <input
+            className="name-input"
+            type='text'
+            placeholder='배급품 이름'
+            value={name}
+            onChange={getValue}
+            name='name'
+        >
+        </input><br/><br></br></center>
+
             <center id="quantity">&emsp;&ensp;&nbsp;&nbsp;수량* : <input
                     className="quantity-input"
                     type='text'
