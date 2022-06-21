@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+<<<<<<< HEAD
 import "./App.css";
 import VictimMain from "./component/victim/Main";
 import VictimInput from "./component/victim/Input";
 import VictimView from "./component/victim/View";
 import VictimUpdate from "./component/victim/Edit";
+=======
+import './App.css';
+import Main from './component/Main';
+import ShelterMain from './component/shelter/Main';
+import SuppliesMain from './component/supplies/Main';
+import SuppliesInput from './component/supplies/Input';
+import SuppliesView from './component/supplies/View';
+import VictimMain from './component/victim/Main';
+>>>>>>> vmSupplies
 
 import Main from "./component/Main";
 import Login from "./component/Login";
@@ -48,6 +58,7 @@ class App extends Component {
             <Route path="/" element={<Login />}></Route>
             <Route path="/main" element={<Main />}></Route>
             <Route path="/shelter" element={<ShelterMain />}></Route>
+<<<<<<< HEAD
             <Route path="/shelter/:index" element={<ShelterView />}></Route>
             <Route path="/shelter/input" element={<ShelterInput />}></Route>
             <Route
@@ -55,6 +66,11 @@ class App extends Component {
               element={<ShelterInput />}
             ></Route>
             <Route path="/supplies" element={<SuppliesMain />}></Route>
+=======
+            <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
+            <Route path="/supplies/input" element={<SuppliesInput />}></Route>
+            <Route path="/supplies/detail/:no" element={<SuppliesView />}></Route>
+>>>>>>> vmSupplies
             <Route path="/victim" element={<VictimMain />}></Route>
           </Routes>
           <Footer />

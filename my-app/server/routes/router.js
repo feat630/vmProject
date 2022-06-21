@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../dbconnection');
 
 router.get('/getData', (req,res) => {
+<<<<<<< HEAD
     
     if (req.session.num === undefined) {
         req.session.num = 1;
@@ -10,6 +11,8 @@ router.get('/getData', (req,res) => {
         req.session.num += 1;
     }
     console.log(req.session);
+=======
+>>>>>>> vmSupplies
     db.query("select * from login", (err, rows) => {
         if(!err) {
             res.send(rows);
