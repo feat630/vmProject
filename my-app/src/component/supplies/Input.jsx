@@ -16,9 +16,9 @@ const fetchDatas =async() => {
         console.log(name);
         console.log(quantity);
         if (name === "" || quantity === "") {
-            alert('입력안된거있으니 확인 ㄱㄱ ')
+            alert('입력이 안되었습니다.')
            } else {
-            alert('등록성공ㅎㅎㅎㅎ')
+            alert('등록되었습니다.')
             window.location.href="/supplies/main"
            }
 

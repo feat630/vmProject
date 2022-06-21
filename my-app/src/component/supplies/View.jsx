@@ -19,6 +19,8 @@ const View = (props) => {
     );
    // setSupplies(response.data);
     setSupplies(response.data[0]);
+    setName(supplies.name); 
+    setQuantity(supplies.quantity);
   };
 
    
@@ -40,8 +42,8 @@ const View = (props) => {
   axios.post( `http://localhost:4000/supplies/update`,{
     data: {'data': [name, quantity, no]}
   });
-  console.log(name);
-  fetchData();
+ // console.log(name);
+  // fetchData();
 }
 
  const dataDelete = () => {
@@ -72,7 +74,7 @@ const onReset = () => {
       <center id="name">
       배급품명* : <input
       className="name-input"
-      onChange={(e) => setName(e.target.value)}
+      onChange={getValue}
       type='text'
       value={supplies.name}
       name='name'
@@ -80,7 +82,7 @@ const onReset = () => {
   </input><br/><br></br></center>
   <center id="quantity">&emsp;&ensp;&nbsp;&nbsp;수량* : <input
           className="quantity-input"
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={getValue}
           type='text'
           value={supplies.quantity}
           name='quantity'
