@@ -2,11 +2,7 @@ const express = require('express');
 const supplies = express.Router();
 const db = require('../dbconnection');
 
-<<<<<<< HEAD
-supplies.get('/getData', (req,res) => {
-=======
 supplies.get('/main', (req,res) => {
->>>>>>> vmSupplies
     db.query("select * from supplies", (err, rows) => {
         if(!err) {
             res.send(rows);
@@ -17,8 +13,6 @@ supplies.get('/main', (req,res) => {
     })
 })
 
-<<<<<<< HEAD
-=======
 /* list  부분 
 supplies.get('/main', (req,res) => {
     db.query("select * from supplies order by no", (err, rows) => {
@@ -113,5 +107,4 @@ supplies.delete('/delete/:id', (req, res) => {
     })
 })
 
->>>>>>> vmSupplies
 module.exports =supplies;
