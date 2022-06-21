@@ -23,21 +23,22 @@ const View = (props) => {
 
    
   
-// const handleName =(e) => {
- //   setName(e.target.value)
-// }
-
- //const handleQuantity =(e) => {
- //   setQuantity(e.target.value)
- //}
-
+  const getValue = (e) => {
+    console.log(e.target.value);
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
+    } else if (name === "quantity") {
+      setGender(value);
+    }
+  };
  const dataChange = () => {
   console.log(name);
   console.log(quantity);
   
 
   axios.post( `http://localhost:4000/supplies/update`,{
-    data: {'data': [name, quantity]}
+    data: {'data': [name, quantity, no]}
   });
   console.log(name);
   fetchData();
