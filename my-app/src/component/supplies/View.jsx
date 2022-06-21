@@ -29,7 +29,7 @@ const View = (props) => {
     if (name === "name") {
       setName(value);
     } else if (name === "quantity") {
-      setGender(value);
+      setQuantity(value);
     }
   };
  const dataChange = () => {
