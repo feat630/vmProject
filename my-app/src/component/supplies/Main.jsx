@@ -7,7 +7,25 @@ import View from "./View";
 
 export const Main = () => {
         const [read,setRead] = useState([]);
+        const [type,setType] = useState([]);
         
+        const checkType = (type) => {
+          switch(type) {
+            case 'A': 
+            return '가구당';
+            
+            case 'B':
+              return '개인당';
+
+            case 'C':
+              return '자율';
+
+            case 'E':
+              return '기타';
+
+          }
+        }
+
         const fetchDatas = async() => {
           const response = await axios.get("http://localhost:4000/supplies/main");
           setRead(response.data);
@@ -33,8 +51,13 @@ export const Main = () => {
               <thead >
               <tr>
               <th>번호</th>
-               <th>배급품명</th>
-               <th>수량</th>
+              <th>구분</th>
+               <th>배급품 이름</th>
+               <th>제공기관</th>
+               <th>총 수량</th>
+               <th>배급수량</th>
+               <th>파손수량</th>
+               <th>배급가능수량</th>
                </tr>
               </thead>
 
@@ -42,8 +65,13 @@ export const Main = () => {
                {read.map((supplies) => (
                 <tr key={supplies.no}>
                 <td >{supplies.no}</td>
+                <td >{checkType(supplies.type)}</td>
                 <td ><Link to={`/supplies/detail/${supplies.no}`}><button  className="name-btn">{supplies.name}</button></Link></td>
-                <td >{supplies.quantity}</td>
+                <td >{supplies.place}</td>
+                <td >{supplies.total}</td>
+                <td >{supplies.distribution}</td>
+                <td >{supplies.damage}</td>
+                <td >{supplies.possibility}</td>
                 </tr>
                ))
                }
