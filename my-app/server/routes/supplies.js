@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const supplies = express.Router();
-const db = require("../dbconnection");
+const db = require('../dbconnection');
 
 supplies.get("/main", (req, res) => {
   db.query("select no,type, name,place, total,distribution,damage,possibility from supplies", (err, rows) => {
@@ -70,8 +70,7 @@ supplies.post("/input", (req, res) => {
         console.log(`query error: ${err}`);
         res.send(err);
       }
-    }
-  );
+    );
 });
 
 supplies.post("/update", (req, res) => {
@@ -88,7 +87,7 @@ supplies.post("/update", (req, res) => {
   console.log(name);
   
 
-  const success = true;
+    const success =true; // 정의되지 않았기때문에 서버가 다운된다. 그래서 이걸 넣어줘야한다. 
 
   db.query(
     "update supplies set name =?, type=? , place =?, total = ?, distribution =?, damage =? , possibility =?  where no=?",
@@ -106,27 +105,47 @@ supplies.post("/update", (req, res) => {
   );
 });
 
-supplies.delete("/delete/:id", (req, res) => {
-  const no = req.params.id;
-  console.log(no);
-  // const name = req.body.data.data[0];
-  //const quantity = req.body.data.data[1];
+    console.log(name);
+    console.log(quantity);
+   
+    const success =true;
+ 
+     db.query("update supplies set name=? , quantity =? where no=?", [name,quantity, no], (err, rows) => {
+        const no = req.params.id;
+       console.log(no);
 
-  //console.log(name)
-  //console.log(quantity)
+        if(!err) {
+             res.send(success);
+             console.log('success')
+         } else {
+             console.log(`query error: ${err}`);
+             res.send(err);
+             alert("변경 실패했습니다.")
+         }
+     })
+ })
 
-  const success = true;
+supplies.delete('/delete/:id', (req, res) => {
+   const no = req.params.id;
+   console.log(no);
+   // const name = req.body.data.data[0];
+    //const quantity = req.body.data.data[1];
+    
+    //console.log(name)
+   //console.log(quantity)
 
-  db.query("delete from supplies where no=?", [no], (err, rows) => {
-    if (!err) {
-      res.send(success);
-      console.log("success");
-    } else {
-      console.log(`query error: ${err}`);
-      res.send(err);
-      console.log("삭제하기 실패했습니다.");
-    }
-  });
-});
+   const success =true;
 
-module.exports = supplies;
+    db.query("delete from supplies where no=?", [no], (err, rows) => {
+        if(!err) {
+            res.send(success);
+            console.log('success')
+        } else {
+            console.log(`query error: ${err}`);
+            res.send(err);
+            alert("삭제하기 실패했습니다.")
+        }
+    })
+})
+
+module.exports =supplies;
