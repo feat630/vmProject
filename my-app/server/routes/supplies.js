@@ -70,6 +70,7 @@ supplies.post("/input", (req, res) => {
         console.log(`query error: ${err}`);
         res.send(err);
       }
+    }
     );
 });
 
@@ -105,25 +106,8 @@ supplies.post("/update", (req, res) => {
   );
 });
 
-    console.log(name);
-    console.log(quantity);
    
-    const success =true;
- 
-     db.query("update supplies set name=? , quantity =? where no=?", [name,quantity, no], (err, rows) => {
-        const no = req.params.id;
-       console.log(no);
 
-        if(!err) {
-             res.send(success);
-             console.log('success')
-         } else {
-             console.log(`query error: ${err}`);
-             res.send(err);
-             alert("변경 실패했습니다.")
-         }
-     })
- })
 
 supplies.delete('/delete/:id', (req, res) => {
    const no = req.params.id;
