@@ -19,11 +19,20 @@ const View = (props) => {
 
   const DeleteData = () => {
     if (window.confirm("삭제하시겠습니까?")) {
-      axios.delete(`http://localhost:4000/victim/delete/${id}`);
+      axios.post(`http://localhost:4000/victim/delete/${id}`);
       alert("삭제되었습니다.");
       navigate("/victim");
     }
     return;
+  };
+
+  const checkGender = (gender) => {
+    switch (gender) {
+      case "M":
+        return "남자";
+      case "W":
+        return "여자";
+    }
   };
 
   useEffect(() => {
@@ -40,7 +49,7 @@ const View = (props) => {
         </tr>
         <tr>
           <td className="victim-table-detail">성별</td>
-          <td>{victim.gender}</td>
+          <td>{checkGender(victim.gender)}</td>
         </tr>
         <tr>
           <td className="victim-table-detail">나이</td>

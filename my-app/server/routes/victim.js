@@ -3,14 +3,20 @@ const victim = express.Router();
 const db = require("../dbconnection");
 
 victim.get("/list", (req, res) => {
-  db.query("select * from victim", (err, rows) => {
-    if (!err) {
-      res.send(rows);
-    } else {
-      console.log(`query error: ${err}`);
-      res.send(err);
+  // const success = "success";
+  // db.query("select * from victim", (err, rows) => {
+  db.query(
+    "select victim_id, name, gender, age, delete_yn from victim",
+    (err, rows) => {
+      if (!err) {
+        // res.send(success);
+        res.send(rows);
+      } else {
+        console.log(`query error: ${err}`);
+        res.send(err);
+      }
     }
-  });
+  );
 });
 
 victim.get("/detail/:id", (req, res) => {
@@ -56,10 +62,6 @@ victim.post("/register", (req, res) => {
 });
 
 victim.post("/update", (req, res) => {
-  const victimId = req.params.id;
-
-  console.log("victimId: ", victimId);
-
   const name = req.body.data.data[0];
   const gender = req.body.data.data[1];
   const age = req.body.data.data[2];
@@ -87,16 +89,18 @@ victim.post("/update", (req, res) => {
   );
 });
 
-victim.delete("/delete/:id", (req, res) => {
+victim.post("/delete/:id", (req, res) => {
   const victimId = req.params.id;
 
   console.log(victimId);
 
+  const deleteYn = "Y";
+
   const success = true;
 
   db.query(
-    "delete from victim where victim_id = ?",
-    [victimId],
+    "update victim set delete_yn = ? where victim_id = ?",
+    [deleteYn, victimId],
     (err, rows) => {
       if (!err) {
         res.send(success);

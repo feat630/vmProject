@@ -11,13 +11,16 @@ const Edit = (props) => {
   const [gender, setGender] = useState([]);
   const [age, setAge] = useState([]);
 
-  console.log(name);
-  console.log(gender);
-  console.log(age);
+  const [nameMessage, setNameMessage] = useState("");
+  const [ageMessage, setAgeMessage] = useState("");
+
+  // console.log(name);
+  // console.log(gender);
+  // console.log(age);
 
   let { id } = useParams();
 
-  console.log("id ", id);
+  // console.log("id: ", id);
 
   const navigate = useNavigate();
 
@@ -33,6 +36,27 @@ const Edit = (props) => {
     setAge(victim.age);
   };
 
+  const onChangeAge = (e) => {
+    const { value } = e.target;
+    const ageRegex = /^[0-9]+$/;
+    if (!ageRegex.test(e.target.value)) {
+      setAgeMessage("숫자만 입력 가능합니다.");
+    } else {
+      setAgeMessage("");
+    }
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    setAge(onlyNumber);
+  };
+
+  const onChangeName = (e) => {
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setNameMessage("2글자 이상 5글자 이하로 입력해주세요.");
+    } else {
+      setNameMessage("");
+    }
+  };
+
   const updateData = () => {
     console.log("updateData!!!");
     console.log(name);
@@ -45,6 +69,8 @@ const Edit = (props) => {
   };
 
   const getValue = (e) => {
+    console.log("getValue 실행!!!");
+    console.log(e.target.name);
     console.log(e.target.value);
     const { name, value } = e.target;
     if (name === "name") {
@@ -73,13 +99,17 @@ const Edit = (props) => {
           </td>
           <td>
             <input
-              className="name-input-victim"
+              className="victim-name-input"
               type="text"
               placeholder="이름"
               value={name}
-              onChange={getValue}
+              onChange={(e) => {
+                getValue(e);
+                onChangeName(e);
+              }}
               name="name"
             ></input>
+            <div className="victim-message-edit">{nameMessage}</div>
           </td>
         </tr>
         <tr>
@@ -87,14 +117,32 @@ const Edit = (props) => {
             <label>성별</label>
           </td>
           <td>
-            <input
+            {/* <input
               className="gender-input"
               type="text"
               placeholder="성별"
               value={gender}
               onChange={getValue}
               name="gender"
+            ></input> */}
+            <input
+              id="man"
+              value="M"
+              type="radio"
+              name="gender"
+              onChange={getValue}
+              checked={gender === "M"}
             ></input>
+            <label htmlFor="man">남자</label>
+            <input
+              id="woman"
+              value="W"
+              type="radio"
+              name="gender"
+              onChange={getValue}
+              checked={gender === "W"}
+            ></input>
+            <label htmlFor="woman">여자</label>
           </td>
         </tr>
         <tr>
@@ -107,9 +155,13 @@ const Edit = (props) => {
               type="text"
               placeholder="나이"
               value={age}
-              onChange={getValue}
+              onChange={(e) => {
+                getValue(e);
+                onChangeAge(e);
+              }}
               name="age"
             ></input>
+            <div className="victim-message-edit">{ageMessage}</div>
           </td>
         </tr>
       </table>
