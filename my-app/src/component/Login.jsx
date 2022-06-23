@@ -31,7 +31,7 @@ export const Login = () => {
             navigate("/");
         } else {
             console.log("성공")
-            navigate("../main");
+            window.location.href = 'http://localhost:3000/main';
         }
 
     }
