@@ -5,6 +5,9 @@ import axios from "axios";
 export const Input = () => {
     const [name, setName] = useState();
     const [quantity, setQuantity] = useState();
+    const [category, setCategory] = useState();
+    const [address, setAddress] = useState();
+    const [tel, setTel] = useState();
     const {index} = useParams();
 
     const fetchDatas = async() => {
@@ -21,8 +24,14 @@ export const Input = () => {
 		const { name, value } = e.target;
     	if(name === 'name') {
 			setName(value);
-		} else {
+		} else if(name === 'quantity') {
 			setQuantity(value);
+		} else if(name === 'category') {
+			setCategory(value);
+		} else if(name === 'address') {
+			setAddress(value);
+		} else if(name === 'tel') {
+			setTel(value);
 		}
 	}
 
@@ -30,7 +39,10 @@ export const Input = () => {
         axios.post('/shelter/postData',{
 			data: {'data': [
 				name,
-				quantity]
+				quantity,
+                category,
+                address,
+                tel]
 			}
 		});
     }
@@ -40,7 +52,10 @@ export const Input = () => {
 			data: {'data': [
                 index,
 				name,
-				quantity]
+				quantity,
+                category,
+                address,
+                tel]
 			}
 		});
     }
@@ -57,7 +72,6 @@ export const Input = () => {
                 <br/>
                 <h1>신규 구호소 등록</h1>
                 구호소명:<input
-                        
                         className="name-input"
                         type='text'
                         placeholder='구호소명'
@@ -67,7 +81,6 @@ export const Input = () => {
                     >
                     </input><br/>
                 최대수용인원:<input
-                        
                         className="quantity-input"
                         type='text'
                         placeholder='최대수용인원'
@@ -76,6 +89,34 @@ export const Input = () => {
                         name='quantity'
                     >
                     </input><br/>
+                카테고리:<input
+                    className="category-input"
+                    type='text'
+                    placeholder='카테고리'
+                    value={category}
+                    onChange={getValue}
+                    name='category'
+                >
+                </input><br/>
+                주소:<input
+                        className="address-input"
+                        type='text'
+                        placeholder='주소'
+                        value={address}
+                        onChange={getValue}
+                        name='address'
+                    >
+                    </input><br/>
+                연락처:<input
+                        className="tel-input"
+                        type='text'
+                        placeholder='연락처'
+                        value={tel}
+                        onChange={getValue}
+                        name='tel'
+                    >
+                    </input><br/>
+                    
                 <Link to="/shelter"><button onClick={() => {dataInsert()}}>제출하기</button></Link><br></br>
                 <br/>
             </>
