@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"; 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const Input = () => {
+    let navigate = useNavigate();
+
     const [name, setName] = useState();
     const [quantity, setQuantity] = useState();
     const [category, setCategory] = useState();
@@ -15,6 +17,9 @@ export const Input = () => {
             const response = await axios.get(`http://localhost:4000/shelter/getOne/${index}`);
             setName(response.data[0].shelter_name);
             setQuantity(response.data[0].shelter_quantity);
+            setCategory(response.data[0].shelter_category);
+            setAddress(response.data[0].shelter_address);
+            setTel(response.data[0].shelter_tel);
         } else {
 
         }
@@ -36,31 +41,67 @@ export const Input = () => {
 	}
 
     const dataInsert = () => {
-        axios.post('/shelter/postData',{
-			data: {'data': [
-				name,
-				quantity,
-                category,
-                address,
-                tel]
-			}
-		});
+        if(name === "" || quantity === "" || category === "" || address === "" || tel === ""){
+            alert("모두 입력해주세요")
+        } else if(name == null || quantity == null || category == null || address == null || tel == null){
+            alert("모두 입력해주세요")
+        } else {
+            axios.post('/shelter/postData',{
+                data: {'data': [
+                    name,
+                    quantity,
+                    category,
+                    address,
+                    tel]
+                }
+            });
+            console.log("nav")
+            navigate("/shelter");
+        }
     }
 
     const dataUpdate = () => {
-        axios.post('/shelter/updateData',{
-			data: {'data': [
-                index,
-				name,
-				quantity,
-                category,
-                address,
-                tel]
-			}
-		});
+        if(name === "" || quantity === "" || category === "" || address === "" || tel === ""){
+            alert("모두 입력해주세요")
+        } else if(name == null || quantity == null || category == null || address == null || tel == null){
+            alert("모두 입력해주세요")
+        } else {
+            axios.post('/shelter/updateData',{
+                data: {'data': [
+                    index,
+                    name,
+                    quantity,
+                    category,
+                    address,
+                    tel]
+                }
+            });
+            navigate("/shelter");
+        }
+    }
+
+    const loginCheck = async() => {
+        const status = await axios.get('/login/status', "",{ withCredentials: true });
+        console.log(status.data)
+        if(!status.data) {
+            navigate("/");
+            console.log("로그아웃상태")
+        } else{
+            console.log("로그인상태")
+        }
+    }
+
+    const maxLengthCheck = (tel) => {
+        if(tel==null){
+
+        } else if (tel.length > 11) {
+            setTel(tel.slice(0, 11));
+        }
+        
     }
 
     useEffect( () => {
+        loginCheck();
         fetchDatas();
     }, [])
 
@@ -71,7 +112,8 @@ export const Input = () => {
                 <span>{index}</span>
                 <br/>
                 <h1>신규 구호소 등록</h1>
-                구호소명:<input
+                구호소명<br/>
+                <input
                         className="name-input"
                         type='text'
                         placeholder='구호소명'
@@ -79,17 +121,19 @@ export const Input = () => {
                         onChange={getValue}
                         name='name'
                     >
-                    </input><br/>
-                최대수용인원:<input
+                    </input><br/><br/>
+                최대수용인원<br/>
+                <input
                         className="quantity-input"
-                        type='text'
+                        type='number'
                         placeholder='최대수용인원'
                         value={quantity}
                         onChange={getValue}
                         name='quantity'
                     >
-                    </input><br/>
-                카테고리:<input
+                    </input><br/><br/>
+                카테고리<br/>
+                <input
                     className="category-input"
                     type='text'
                     placeholder='카테고리'
@@ -97,8 +141,9 @@ export const Input = () => {
                     onChange={getValue}
                     name='category'
                 >
-                </input><br/>
-                주소:<input
+                </input><br/><br/>
+                주소<br/>
+                <input
                         className="address-input"
                         type='text'
                         placeholder='주소'
@@ -106,18 +151,20 @@ export const Input = () => {
                         onChange={getValue}
                         name='address'
                     >
-                    </input><br/>
-                연락처:<input
+                    </input><br/><br/>
+                연락처<br/>
+                <input
                         className="tel-input"
-                        type='text'
-                        placeholder='연락처'
+                        type='number'
+                        placeholder='(-)없이 숫자만 입력'
                         value={tel}
                         onChange={getValue}
                         name='tel'
+                        oninput={maxLengthCheck(tel)}
                     >
-                    </input><br/>
+                    </input><br/><br/>
                     
-                <Link to="/shelter"><button onClick={() => {dataInsert()}}>제출하기</button></Link><br></br>
+                <button onClick={() => {dataInsert()}}>제출하기</button><br></br>
                 <br/>
             </>
         )
@@ -126,8 +173,8 @@ export const Input = () => {
             <>
                 <br/>
                 <h1>구호소 업데이트{index}</h1>
-                구호소명:<input
-                        
+                구호소명<br/>
+                <input
                         className="name-input"
                         type='text'
                         placeholder='구호소명'
@@ -135,18 +182,49 @@ export const Input = () => {
                         onChange={getValue}
                         name='name'
                     >
-                    </input><br/>
-                최대수용인원:<input
-                        
+                    </input><br/><br/>
+                최대수용인원<br/>
+                <input
                         className="quantity-input"
-                        type='text'
+                        type='number'
                         placeholder='최대수용인원'
                         value={quantity}
                         onChange={getValue}
                         name='quantity'
                     >
-                    </input><br/>
-                <Link to="/shelter"><button onClick={() => {dataUpdate()}}>제출하기</button></Link><br></br>
+                    </input><br/><br/>
+                카테고리<br/>
+                <input
+                    className="category-input"
+                    type='text'
+                    placeholder='카테고리'
+                    value={category}
+                    onChange={getValue}
+                    name='category'
+                >
+                </input><br/><br/>
+                주소<br/>
+                <input
+                        className="address-input"
+                        type='text'
+                        placeholder='주소'
+                        value={address}
+                        onChange={getValue}
+                        name='address'
+                    >
+                    </input><br/><br/>
+                연락처<br/>
+                <input
+                    className="tel-input"
+                    type='number'
+                    placeholder='(-)없이 숫자만 입력'
+                    value={tel}
+                    onChange={getValue}
+                    name='tel'
+                    oninput={maxLengthCheck(tel)}
+                    >
+                    </input><br/><br/>
+                <button onClick={() => {dataUpdate()}}>제출하기</button><br></br>
                 <br/>
             </>
         )
