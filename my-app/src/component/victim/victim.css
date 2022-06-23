@@ -61,9 +61,9 @@ a {
   background: #f0f6f9;
 }
 
-input {
+.victim-input {
   height: 2em;
-  height: 32px;
+  /* height: 32px; */
   font-size: 15px;
   border: 0;
   border-radius: 15px;
@@ -72,3 +72,17 @@ input {
   background-color: rgb(233, 233, 233);
 }
 
+.victim-register-div {
+  text-align: center;
+}
+
+.victim-message {
+  font-size: 0.8em;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.victim-message-edit {
+  font-size: 0.8em;
+  color: red;
+}

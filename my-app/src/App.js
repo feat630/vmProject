@@ -10,6 +10,7 @@ import VictimUpdate from "./component/victim/Edit";
 import SuppliesMain from "./component/supplies/Main";
 import SuppliesInput from "./component/supplies/Input";
 import SuppliesView from "./component/supplies/View";
+import SuppliesUpdate from "./component/supplies/Update";
 
 import Main from "./component/Main";
 import Login from "./component/Login";
