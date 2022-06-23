@@ -47,6 +47,18 @@ export const View = () => {
                                 <td>최대수용인원</td>
                                 <td colSpan="3">{v.shelter_quantity}</td>
                             </tr>
+                            <tr>
+                                <td>카테고리</td>
+                                <td colSpan="3">{v.shelter_category}</td>
+                            </tr>
+                            <tr>
+                                <td>주소</td>
+                                <td colSpan="3">{v.shelter_address}</td>
+                            </tr>
+                            <tr>
+                                <td>연락처</td>
+                                <td colSpan="3">{v.shelter_tel}</td>
+                            </tr>
                         </tbody>
                     </table>
                     <Link to={`/shelter/input/${v.shelter_id}`}><button>수정</button></Link>

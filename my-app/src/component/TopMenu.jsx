@@ -14,13 +14,14 @@ export const TopMenu = () => {
 
     const logout = async() => {
         const response = await axios.get('http://localhost:4000/login/logout', { withCredentials: true });
-        setIsLogn(response.data.id);
+        setIsLogn(...isLogin, response.data.id);
         console.log(isLogin)
     }
 
     useEffect(() => {
+        console.log(isLogin)
         fetchDatas();
-    },[]);
+    });
 
 
     if(isLogin) {

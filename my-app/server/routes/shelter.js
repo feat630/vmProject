@@ -12,7 +12,7 @@ shelter.get('/getData', (req,res) => {
       }
       console.log(req.session);
       const num = req.session.num;
-    db.query("select * from shelter", (err, rows) => {
+    db.query("select shelter_id, shelter_name, shelter_category, shelter_address, shelter_quantity, shelter_tel from shelter where del_yn = false", (err, rows) => {
         if(!err) {
             const ewq = {rows, num}
             res.send(ewq);
@@ -27,7 +27,7 @@ shelter.get('/getData', (req,res) => {
 
 shelter.get('/getOne/:index', (req,res) => {
     const sId = req.params.index;
-    db.query("select * from shelter where shelter_id = ?", [sId], (err, rows) => {
+    db.query("select shelter_id, shelter_name, shelter_category, shelter_address, shelter_quantity, shelter_tel from shelter where shelter_id = ?", [sId], (err, rows) => {
         if(!err) {
             res.send(rows);
         } else {
@@ -55,7 +55,7 @@ shelter.post('/postData', (req, res) => {
 shelter.post('/deleteData', (req, res) => {
     const id = req.body.data.data[0];
 
-    db.query("delete from shelter where shelter_id = ?", [id], (err, rows) => {
+    db.query("update shelter set del_yn = true where shelter_id = ?", [id], (err, rows) => {
         if(!err) {
             // res.send(rows);
             console.log('success')
