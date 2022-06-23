@@ -1,7 +1,24 @@
-import React from "react"; 
-import { Link } from "react-router-dom";
+import { React, useEffect } from "react"; 
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Main = () => {
+    let navigate = useNavigate();
+
+    const loginCheck = async() => {
+        const response = await axios.get('/login/status', "",{ withCredentials: true });
+        console.log(response.data)
+        if(!response.data) {
+            navigate("/");
+            console.log("로그아웃상태")
+        } else{
+            console.log("로그인상태")
+        }
+    }
+
+    useEffect(() => {
+        loginCheck();
+    },[]);
 
     return (
         <>

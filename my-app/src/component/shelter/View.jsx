@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"; 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const View = () => {
+    let navigate = useNavigate();
 
     const [read, setRead] = useState([]);
     const {index} = useParams();
@@ -10,7 +11,6 @@ export const View = () => {
     const fetchDatas = async() => {
         const response = await axios.get(`http://localhost:4000/shelter/getOne/${index}`);
         await setRead(response.data);
-        await console.log(read)
     }
 
     const dataDelete = (v) => {
@@ -19,6 +19,46 @@ export const View = () => {
 				v.shelter_id]
 			}
 		});
+    }
+
+    const telReg = (telnum) => {
+        var number = telnum.replace(/[^0-9]/g, "");
+        var phone = "";
+
+        if (number.length < 9) {
+            return number;
+        } else if (number.length < 10) {
+            phone += number.substr(0, 2);
+            phone += "-";
+            phone += number.substr(2, 3);
+            phone += "-";
+            phone += number.substr(5);
+        } else if (number.length < 11) {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 3);
+            phone += "-";
+            phone += number.substr(6);
+        } else {
+            phone += number.substr(0, 3);
+            phone += "-";
+            phone += number.substr(3, 4);
+            phone += "-";
+            phone += number.substr(7);
+        }
+
+        return phone;
+    }
+
+    const loginCheck = async() => {
+        const status = await axios.get('/login/status', "",{ withCredentials: true });
+        console.log(status.data)
+        if(!status.data) {
+            navigate("/");
+            console.log("로그아웃상태")
+        } else{
+            console.log("로그인상태")
+        }
     }
 
     useEffect( () => {
@@ -45,7 +85,7 @@ export const View = () => {
                             </tr>
                             <tr>
                                 <td>최대수용인원</td>
-                                <td colSpan="3">{v.shelter_quantity}</td>
+                                <td colSpan="3">{(v.shelter_quantity).toLocaleString('ko-KR')}</td>
                             </tr>
                             <tr>
                                 <td>카테고리</td>
@@ -57,7 +97,7 @@ export const View = () => {
                             </tr>
                             <tr>
                                 <td>연락처</td>
-                                <td colSpan="3">{v.shelter_tel}</td>
+                                <td colSpan="3">{telReg(v.shelter_tel)}</td>
                             </tr>
                         </tbody>
                     </table>

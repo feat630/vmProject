@@ -40,8 +40,11 @@ shelter.get('/getOne/:index', (req,res) => {
 shelter.post('/postData', (req, res) => {
     const name = req.body.data.data[0];
     const quantity = req.body.data.data[1];
+    const category = req.body.data.data[2];
+    const address = req.body.data.data[3];
+    const tel = req.body.data.data[4];
 
-    db.query("insert into shelter(shelter_name, shelter_quantity) values(?, ?)", [name, quantity], (err, rows) => {
+    db.query("insert into shelter(shelter_name, shelter_quantity, shelter_category, shelter_address, shelter_tel) values(?, ?, ?, ?, ?)", [name, quantity, category, address, tel], (err, rows) => {
         if(!err) {
             // res.send(rows);
             console.log('success')
@@ -55,7 +58,7 @@ shelter.post('/postData', (req, res) => {
 shelter.post('/deleteData', (req, res) => {
     const id = req.body.data.data[0];
 
-    db.query("update shelter set del_yn = true where shelter_id = ?", [id], (err, rows) => {
+    db.query("update shelter set del_yn = true, upt_date = now() where shelter_id = ?", [id], (err, rows) => {
         if(!err) {
             // res.send(rows);
             console.log('success')
@@ -70,8 +73,11 @@ shelter.post('/updateData', (req, res) => {
     const id = req.body.data.data[0];
     const name = req.body.data.data[1];
     const quantity = req.body.data.data[2];
+    const category = req.body.data.data[3];
+    const address = req.body.data.data[4];
+    const tel = req.body.data.data[5];
 
-    db.query("update shelter set shelter_name = ?, shelter_quantity = ? where shelter_id = ?", [name, quantity, id], (err, rows) => {
+    db.query("update shelter set shelter_name = ?, shelter_quantity = ?, shelter_category = ?, shelter_address = ?, shelter_tel = ?, upt_date = now() where shelter_id = ?", [name, quantity, category, address, tel,id], (err, rows) => {
         if(!err) {
             // res.send(rows);
             console.log('success')
