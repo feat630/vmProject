@@ -47,8 +47,8 @@ export const Main = () => {
             <br></br>
             <br></br>
 
-            <table style={{marginTop:-10}} className="tablelist">
-              <thead >
+            <table style={{marginTop:-10}} className="supplies-tablelist">
+              <thead className = "supplies-thead" >
               <tr>
               <th>번호</th>
               <th>구분</th>
@@ -61,7 +61,7 @@ export const Main = () => {
                </tr>
               </thead>
 
-              <tbody>
+              <tbody className = "supplies-tbody">
                {read.map((supplies) => (
                 <tr key={supplies.no}>
                 <td >{supplies.no}</td>

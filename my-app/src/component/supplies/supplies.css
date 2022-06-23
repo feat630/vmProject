@@ -14,7 +14,7 @@ padding-bottom: 20px;
 padding-left: 10px;
 }
 
-thead          {
+.supplies-thead          {
  text-align:center !important;
   font-weight: bold;
   font-size:25px;
@@ -29,7 +29,7 @@ padding-bottom: 20px;
 padding-left: 30px;
 }
 
-thead th        {
+.supplies-thead th        {
   vertical-align: middle;
   text-align: center;
 }
