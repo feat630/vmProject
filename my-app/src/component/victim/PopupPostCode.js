@@ -3,6 +3,7 @@ import DaumPostcode from "react-daum-postcode";
 
 const PopupPostCode = (props) => {
   const [victimAddress, setVictimAddress] = useState("");
+
   // 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
   const handlePostCode = (data) => {
     let fullAddress = data.address;
@@ -22,6 +23,7 @@ const PopupPostCode = (props) => {
     console.log(fullAddress);
     console.log(data.zonecode);
     setVictimAddress(fullAddress);
+    props.setAddress(fullAddress);
     props.onClose();
   };
 
@@ -41,7 +43,7 @@ const PopupPostCode = (props) => {
         onComplete={handlePostCode}
         addr={victimAddress}
       />
-      // 닫기 버튼 생성
+      {/* // 닫기 버튼 생성 */}
       <button
         type="button"
         onClick={() => {
@@ -51,8 +53,6 @@ const PopupPostCode = (props) => {
       >
         닫기
       </button>
-      <div>여기에 주소 넣어야지</div>
-      <div>{victimAddress}</div>
     </div>
   );
 };
