@@ -5,23 +5,35 @@ import "./victim.css";
 import { useNavigate } from "react-router-dom";
 
 const View = (props) => {
+  let [alert2, setAlert2] = useState(true);
   const [victim, setVictim] = useState([]);
   let { id } = useParams();
 
   const navigate = useNavigate();
 
-  const fetchDatas = async () => {
+  const fetchData = async () => {
+    console.log("fetchData 실행!!!");
     const response = await axios.get(
       `http://localhost:4000/victim/detail/${id}`
     );
-    setVictim(response.data[0]);
+    console.log(response);
+    if (victim.delete_yn === "Y") {
+      alert("해당 데이터에 접근할 수 없습니다.");
+      navigate("/victim");
+    } else {
+      setVictim(response.data[0]);
+    }
   };
 
-  const DeleteData = () => {
+  const DeleteData = async () => {
     if (window.confirm("삭제하시겠습니까?")) {
-      axios.post(`http://localhost:4000/victim/delete/${id}`);
-      alert("삭제되었습니다.");
-      navigate("/victim");
+      const response = await axios.post(
+        `http://localhost:4000/victim/delete/${id}`
+      );
+      if (response.status === 200) {
+        alert("삭제되었습니다.");
+        navigate("/victim");
+      }
     }
     return;
   };
@@ -36,8 +48,11 @@ const View = (props) => {
   };
 
   useEffect(() => {
-    fetchDatas();
-  }, []);
+    let timer = setTimeout(() => {
+      setAlert2(false);
+    }, 100);
+    fetchData();
+  }, [alert2]);
 
   return (
     <>

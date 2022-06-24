@@ -21,6 +21,8 @@ import ShelterInput from "./component/shelter/Input";
 import TopMenu from "./component/TopMenu";
 import Footer from "./component/Footer";
 
+import Popup from "./component/victim/Test";
+
 class App extends Component {
   state = { username: null };
 
@@ -30,7 +32,6 @@ class App extends Component {
         <BrowserRouter>
           <TopMenu />
           <Routes>
-
             <Route path="/" element={<Login />}></Route>
             <Route path="/main" element={<Main />}></Route>
 
@@ -41,7 +42,7 @@ class App extends Component {
               path="/shelter/input/:index"
               element={<ShelterInput />}
             ></Route>
-            
+
             <Route path="/supplies" element={<SuppliesMain />}></Route>
             <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
             <Route path="/supplies/input" element={<SuppliesInput />}></Route>
@@ -49,8 +50,7 @@ class App extends Component {
               path="/supplies/detail/:no"
               element={<SuppliesView />}
             ></Route>
-            
-            
+
             <Route exact path="/victim" element={<VictimMain />}></Route>
             <Route
               exact
@@ -67,7 +67,7 @@ class App extends Component {
               path="/victim/update/:id"
               element={<VictimUpdate />}
             ></Route>
-            
+            <Route exact path="/victim/popup" element={<Popup />}></Route>
           </Routes>
           <Footer />
         </BrowserRouter>
