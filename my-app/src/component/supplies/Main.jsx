@@ -6,8 +6,8 @@ import "./supplies.css";
 import View from "./View";
 
 export const Main = () => {
-        const [read,setRead] = useState([]);
-        const [type,setType] = useState([]);
+        const [supplies,setSupplies] = useState([]);
+        
         
         const checkType = (type) => {
           switch(type) {
@@ -28,9 +28,14 @@ export const Main = () => {
 
         const fetchDatas = async() => {
           const response = await axios.get("http://localhost:4000/supplies/main");
-          setRead(response.data);
           console.log(response.data);
-        }
+          const activeUsers = response.data.filter(
+            (supplies) => supplies.delete_yn === "N"
+          );
+          setSupplies(activeUsers);
+          console.log(activeUsers);
+        };
+        
 
         useEffect(() => {
           fetchDatas();
@@ -48,29 +53,29 @@ export const Main = () => {
             <br></br>
 
             <table style={{marginTop:-10}} className="supplies-tablelist">
-              <thead className = "supplies-thead" >
+              <thead className = "supplies-thead"  >
               <tr>
-              <th>번호</th>
-              <th>구분</th>
-               <th>배급품 이름</th>
-               <th>제공기관</th>
-               <th>총 수량</th>
-               <th>배급수량</th>
-               <th>파손수량</th>
+              <th>번호</th>&emsp;&ensp;&nbsp;&nbsp;
+              <th>구분</th>&emsp;&ensp;&nbsp;&nbsp;
+               <th>배급품 이름</th>&emsp;&ensp;&nbsp;&nbsp;
+               <th>제공기관</th>&emsp;&ensp;&nbsp;&nbsp;
+               <th>총 수량</th>&emsp;&ensp;&nbsp;&nbsp;
+               <th>배급수량</th>&emsp;&ensp;&nbsp;&nbsp;
+               <th>파손수량</th>&emsp;&ensp;&nbsp;&nbsp;
                <th>배급가능수량</th>
                </tr>
               </thead>
 
               <tbody className = "supplies-tbody">
-               {read.map((supplies) => (
+               {supplies.map((supplies) => (
                 <tr key={supplies.no}>
-                <td >{supplies.no}</td>
-                <td >{checkType(supplies.type)}</td>
-                <td ><Link to={`/supplies/detail/${supplies.no}`}><button  className="name-btn">{supplies.name}</button></Link></td>
-                <td >{supplies.place}</td>
-                <td >{supplies.total}</td>
-                <td >{supplies.distribution}</td>
-                <td >{supplies.damage}</td>
+                <td >{supplies.no}</td>&emsp;&ensp;&nbsp;&nbsp;
+                <td >{checkType(supplies.type)}</td>&emsp;&ensp;&nbsp;&nbsp;
+                <td ><Link to={`/supplies/detail/${supplies.no}`}><button  className="name-btn">{supplies.name}</button></Link></td>&emsp;&ensp;&nbsp;&nbsp;
+                <td >{supplies.place}</td>&emsp;&ensp;&nbsp;&nbsp;
+                <td >{supplies.total}</td>&emsp;&ensp;&nbsp;&nbsp;
+                <td >{supplies.distribution}</td>&emsp;&ensp;&nbsp;&nbsp;
+                <td >{supplies.damage}</td>&emsp;&ensp;&nbsp;&nbsp;
                 <td >{supplies.possibility}</td>
                 </tr>
                ))

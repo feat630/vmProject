@@ -14,6 +14,23 @@ const Update = (props) => {
   const [distribution, setDistribution] = useState([]);
   const [damage, setDamage] = useState([]);
   const [possibility, setPossibility] = useState([]);
+  const [nameMessage, setNameMessage] = useState("");
+    const [placeMessage, setPlaceMessage] = useState("");
+    const [amount, setAmount] = useState("");
+    const [amountMessage, setAmountMessage] = useState("");
+    const [amountMessage2, setAmountMessage2] = useState("");
+    const [amountMessage3, setAmountMessage3] = useState("");
+    const [amountMessage4, setAmountMessage4] = useState("");
+    const [amountMessage5, setAmountMessage5] = useState("");
+    const [amountMessage6, setAmountMessage6] = useState("");
+    const [amountMessage7, setAmountMessage7] = useState("");
+    const [amountMessage8, setAmountMessage8] = useState("");
+    const [amountMessage9, setAmountMessage9] = useState("");
+    const [amountMessage10, setAmountMessage10] = useState("");
+    const [amountMessage11, setAmountMessage11] = useState("");
+    const [amountMessage12, setAmountMessage12] = useState("");
+    const[numbermessage,setNumberMessage] = useState("");
+
 
   
   console.log(name);
@@ -59,6 +76,88 @@ const Update = (props) => {
     setDistribution(supplies.distribution);
     setDamage(supplies.damage);
     setPossibility(supplies.possibility);
+  };
+
+  const onChangeAmount= (e) => {
+    const { value } = e.target;
+    const amountRegex = /^[0-9]*$/;
+    if (!amountRegex.test(e.target.value)) {
+      setAmountMessage("숫자만 입력 가능합니다.");
+    } else if (e.target.value <= 0 ) {
+      setAmountMessage2("1부터 입력 가능합니다.");
+    }  else {
+      setAmountMessage3("")
+    }
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    setAmount(onlyNumber);
+  };
+  
+  const onChangeAmount2= (e) => {
+    const { value2 } = e.target;
+    const amountRegex2 = /^[0-9]*$/;
+    if (!amountRegex2.test(e.target.value)) {
+      setAmountMessage4("숫자만 입력 가능합니다.");
+    } else if (e.target.value < 0 ) {
+      setAmountMessage5("0부터 입력 가능합니다.");
+    }  else {
+      setAmountMessage6("")
+    }
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber2 = value2.replace(/[^0-9]/g, "");
+    setAmount(onlyNumber2);
+  };
+  
+  
+  const onChangeAmount3= (e) => {
+    const { value3 } = e.target;
+    const amountRegex3 = /^[0-9]*$/;
+    if (!amountRegex3.test(e.target.value)) {
+      setAmountMessage7("숫자만 입력 가능합니다.");
+    } else if (e.target.value < 0 ) {
+      setAmountMessage8("0부터 입력 가능합니다.");
+    }  else {
+      setAmountMessage9("")
+    }
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber3 = value3.replace(/[^0-9]/g, "");
+    setAmount(onlyNumber3);
+  };
+  
+  const onChangeAmount4= (e) => {
+    const { value } = e.target;
+    const amountRegex4 = /^[0-9]*$/;
+    if (!amountRegex4.test(e.target.value)) {
+      setAmountMessage10("숫자만 입력 가능합니다.");
+    } else if (e.target.value < 0 ) {
+      setAmountMessage11("0부터 입력 가능합니다.");
+    }  else {
+      setAmountMessage12("")
+    }
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber4 = value.replace(/[^0-9]/g, "");
+    setAmount(onlyNumber4);
+  };
+  
+      
+  
+  const onChangeText = (e) => {
+    const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
+    if (!nameRegex.test(e.target.value)) {
+      setNameMessage("문자만 입력 가능합니다.");
+    } else {
+      setNameMessage("");
+    }
+  };
+  
+  
+  const onChangeMessage = (e) => {
+    const placeRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
+    if (!placeRegex.test(e.target.value)) {
+      setPlaceMessage("문자만 입력 가능합니다.");
+    } else {
+      setPlaceMessage("");
+    }
   };
 
   const updateData = () => {
@@ -120,78 +219,97 @@ const Update = (props) => {
         <br />
         <br></br>
       </center>
-      <center id="name">
-        &emsp;&ensp;&nbsp;&nbsp;배급품이름 :
-        <input
-          className="text-input"
-          type="text"
-          value={name}
-          onChange={getValue}
-          name="name"
-        ></input>
-        <br />
-        <br></br>
-      </center>
-      <center id="place">
-      &emsp;&ensp;&nbsp;&nbsp;제공기관 :
+
+     <center id="name">
+      &emsp;&ensp;&nbsp;&nbsp;배급품이름 :
       <input
-        className="text-input"
+        className="supplies-text-input"
         type="text"
-        value={place}
-        onChange={getValue}
-        name="place"
+        placeholder='배급품이름'
+        value={name}
+        name="name"
+        onChange={(e) => {getValue(e);onChangeText(e);}}
       ></input>
-      <br />
-      <br></br>
+      <div className="supplies-message">{nameMessage}</div>
+     <br></br><br/>
     </center>
-    <center id="total">
-    &emsp;&ensp;&nbsp;&nbsp;총 수량 :
+
+       <center id="place">
+    &emsp;&ensp;&nbsp;&nbsp;제공기관 :
     <input
-      className="number-input"
+      className="supplies-text-input"
       type="text"
-      value={total} 
-      onChange={getValue}
-      name="total"
+      placeholder='제공기관'
+      value={place}
+      name="place"
+      onChange={(e) => {getValue(e);onChangeMessage(e);}}
     ></input>
-    <br />
-    <br></br>
+    <div className="supplies-message">{placeMessage}</div>
+    <br></br><br/>
   </center>
-  <center id="distribution">
-  &emsp;&ensp;&nbsp;&nbsp;배급수량 :
+
+  <center id="total">
+  &emsp;&ensp;&nbsp;&nbsp;총 수량 :
   <input
-    className="number-input"
+    className="supplies-number-input"
     type="text"
-    value={distribution}
-    onChange={getValue}
-    name="distribution"
+    placeholder='총 수량'
+    value={total}
+    name="total"
+    onChange={(e) => {getValue(e); onChangeAmount(e);}}
   ></input>
-  <br />
-  <br></br>
+  <div className="supplies-message">{amountMessage}&nbsp;&nbsp;{amountMessage2}</div>
+  <div className="supplies-message2">{numbermessage}</div>
+  <br/>
 </center>
+
+<center id="distribution">
+&emsp;&ensp;&nbsp;&nbsp;배급수량 :
+<input
+  className="supplies-number-input"
+  type="text"
+  placeholder='배급수량'
+  value={distribution}
+  name="distribution"
+  min='0'
+  onChange={(e) => {getValue(e); onChangeAmount2(e)}}
+  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+></input>
+<div className="supplies-message">{amountMessage4}&nbsp;&nbsp;{amountMessage5}</div>
+<br/>
+</center>
+
 <center id="damage">
 &emsp;&ensp;&nbsp;&nbsp;파손수량 :
 <input
-  className="number-input"
-  type="text"
-  value={damage}
-  onChange={getValue}
-  name="damage"
+className="supplies-number-input"
+type="text"
+placeholder='파손수량'
+value={damage}
+name="damage"
+min='0'
+onChange={(e) => {getValue(e); onChangeAmount3(e)}}
+onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 ></input>
-<br />
-<br></br>
+<div className="supplies-message">{amountMessage7}&nbsp;&nbsp;{amountMessage8}</div>
+<br/>
 </center>
+
 <center id="possibility">
 &emsp;&ensp;&nbsp;&nbsp;배급가능수량 :
 <input
-  className="number-input"
-  type="text"
-  value={possibility}
-  onChange={getValue}
-  name="possibility"
+className="supplies-number-input"
+type="text"
+placeholder='배급가능수량'
+value={possibility}
+name="possibility"
+min='0'
+onChange={(e) => {getValue(e); onChangeAmount4(e)}}
 ></input>
-<br></br>
-<br />
+<div className="supplies-message">{amountMessage10}&nbsp;&nbsp;{amountMessage11}</div>
+<br/>
 </center>
+
       <br></br>
       <br></br>
       <br></br>

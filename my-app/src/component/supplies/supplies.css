@@ -1,10 +1,10 @@
-table { 
+.supplies-tablelist { 
   border-collapse: collapse !important; 
   border-spacing: 0px; 
   margin:auto;
 }
 
-table tbody td  { border-collapse: collapse ! important;  
+.supplies-tablelist tbody td  { border-collapse: collapse ! important;  
 border-spacing: 200px; 
 text-align:center; 
 margin-right:auto; margin-left:auto;
@@ -30,6 +30,7 @@ padding-left: 30px;
 }
 
 .supplies-thead th        {
+  border-style:none;
   vertical-align: middle;
   text-align: center;
 }
@@ -46,19 +47,19 @@ padding-left: 30px;
   height:30px;
 }
 
-.text-input, .number-input {
+.supplies-text-input, .supplies-number-input ,.type-input {
     width: 300px;
     height:30px;
     border: 1px solid;
     border-color:  #E1E1E1;
     border-radius: 10px;
 }
-.warn{
-    color: skyblue;
+.supplies-message , .supplies-message2{
+    color: red;
     font-weight:bold;
 }
 
-#name, #quantity{
+#name, #place, #total, #distribution, #damage,#possibility {
     font-weight: bold;
 }
 

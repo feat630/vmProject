@@ -11,12 +11,110 @@ const Input= () => {
     const [distribution, setDistribution] = useState([]);
     const [damage, setDamage] = useState([]);
     const [possibility, setPossibility] = useState([]);
+    const [nameMessage, setNameMessage] = useState("");
+    const [placeMessage, setPlaceMessage] = useState("");
+    const [amount, setAmount] = useState("");
+    const [amountMessage, setAmountMessage] = useState("");
+    const [amountMessage2, setAmountMessage2] = useState("");
+    const [amountMessage3, setAmountMessage3] = useState("");
+    const [amountMessage4, setAmountMessage4] = useState("");
+    const [amountMessage5, setAmountMessage5] = useState("");
+    const [amountMessage6, setAmountMessage6] = useState("");
+    const [amountMessage7, setAmountMessage7] = useState("");
+    const [amountMessage8, setAmountMessage8] = useState("");
+    const [amountMessage9, setAmountMessage9] = useState("");
+    const [amountMessage10, setAmountMessage10] = useState("");
+    const [amountMessage11, setAmountMessage11] = useState("");
+    const [amountMessage12, setAmountMessage12] = useState("");
+    const[numbermessage,setNumberMessage] = useState("");
+
    
 const fetchDatas =async() => {
     const response = await axios.get ('http://localhost:4000/supplies/main');
     setRead(response.data);
 }
+ 
+const onChangeAmount= (e) => {
+  const { value } = e.target;
+  const amountRegex = /^[0-9]*$/;
+  if (!amountRegex.test(e.target.value)) {
+    setAmountMessage("숫자만 입력 가능합니다.");
+  } else if (e.target.value <= 0 ) {
+    setAmountMessage2("1부터 입력 가능합니다.");
+  }  else {
+    setAmountMessage3("")
+  }
+  // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+  const onlyNumber = value.replace(/[^0-9]/g, "");
+setTotal(onlyNumber);
+};
 
+const onChangeAmount2= (e) => {
+  const { value } = e.target;
+  const amountRegex2 = /^[0-9]*$/;
+  if (!amountRegex2.test(e.target.value)) {
+    setAmountMessage4("숫자만 입력 가능합니다.");
+  } else if (e.target.value < 0 ) {
+    setAmountMessage5("0부터 입력 가능합니다.");
+  }  else {
+    setAmountMessage6("")
+  }
+  // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+  const onlyNumber = value.replace(/[^0-9]/g, "");
+  setDistribution(onlyNumber);
+};
+
+
+const onChangeAmount3= (e) => {
+  const { value } = e.target;
+  const amountRegex3 = /^[0-9]*$/;
+  if (!amountRegex3.test(e.target.value)) {
+    setAmountMessage7("숫자만 입력 가능합니다.");
+  } else if (e.target.value < 0 ) {
+    setAmountMessage8("0부터 입력 가능합니다.");
+  }  else {
+    setAmountMessage9("")
+  }
+  // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+  const onlyNumber = value.replace(/[^0-9]/g, "");
+  setDamage(onlyNumber);
+};
+
+const onChangeAmount4= (e) => {
+  const { value } = e.target;
+  const amountRegex4 = /^[0-9]*$/;
+  if (!amountRegex4.test(e.target.value)) {
+    setAmountMessage10("숫자만 입력 가능합니다.");
+  } else if (e.target.value < 0 ) {
+    setAmountMessage11("0부터 입력 가능합니다.");
+  }  else {
+    setAmountMessage12("")
+  }
+  // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+  const onlyNumber = value.replace(/[^0-9]/g, "");
+  setPossibility(onlyNumber);
+};
+
+    
+
+const onChangeText = (e) => {
+  const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
+  if (!nameRegex.test(e.target.value)) {
+    setNameMessage("문자만 입력 가능합니다.");
+  } else {
+    setNameMessage("");
+  }
+};
+
+
+const onChangeMessage = (e) => {
+  const placeRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
+  if (!placeRegex.test(e.target.value)) {
+    setPlaceMessage("문자만 입력 가능합니다.");
+  } else {
+    setPlaceMessage("");
+  }
+};
     const dataInsert = () => {
         console.log(type);
         console.log(name);
@@ -25,21 +123,19 @@ const fetchDatas =async() => {
         console.log(distribution);
         console.log(damage);
         console.log(possibility);
-        if (name.length === 0  || place.length ===0 ||
+     
+      if (name.length === 0  || place.length ===0 ||
         total.length=== 0 || distribution.length === 0 || damage.length === 0 || possibility.length ===0
-        ) {
-            alert('입력이 안되었습니다.')
+      ) {alert('입력이 안되었습니다.')
            } else {
-            alert('등록되었습니다.')
-            window.location.href="/supplies/main"
-           }
 
 		axios.post('http://localhost:4000/supplies/input',{
 			data: {'data': [type, name, place, total,distribution, damage,possibility]}
 		});
         console.log(name);
-        fetchDatas();
+        alert('등록되었습니다.')
 	}
+};
     
 
 
@@ -91,89 +187,101 @@ const fetchDatas =async() => {
         <option value="C">자율</option>
         <option value="E">기타</option>
       </select>
-      <br />
       <br></br>
+      <br/>
     </center>
+    
     <center id="name">
       &emsp;&ensp;&nbsp;&nbsp;배급품이름 :
       <input
-        className="text-input"
+        className="supplies-text-input"
         type="text"
         placeholder='배급품이름'
         value={name}
         name="name"
-        onChange={getValue}
+        onChange={(e) => {getValue(e);onChangeText(e);}}
       ></input>
-      <br />
-      <br></br>
+      <div className="supplies-message">{nameMessage}</div>
+     <br></br><br/>
     </center>
+
     <center id="place">
     &emsp;&ensp;&nbsp;&nbsp;제공기관 :
     <input
-      className="text-input"
+      className="supplies-text-input"
       type="text"
       placeholder='제공기관'
       value={place}
       name="place"
-      onChange={getValue}
+      onChange={(e) => {getValue(e);onChangeMessage(e);}}
     ></input>
-    <br />
-    <br></br>
+    <div className="supplies-message">{placeMessage}</div>
+    <br></br><br/>
   </center>
+
   <center id="total">
   &emsp;&ensp;&nbsp;&nbsp;총 수량 :
   <input
-    className="number-input"
+    className="supplies-number-input"
     type="text"
     placeholder='총 수량'
     value={total}
     name="total"
-    onChange={getValue}
+    onChange={(e) => {getValue(e); onChangeAmount(e);}}
   ></input>
-  <br />
-  <br></br>
+  <div className="supplies-message">{amountMessage}&nbsp;&nbsp;{amountMessage2}</div>
+  <div className="supplies-message2">{numbermessage}</div>
+  <br/>
 </center>
+
 <center id="distribution">
 &emsp;&ensp;&nbsp;&nbsp;배급수량 :
 <input
-  className="number-input"
+  className="supplies-number-input"
   type="text"
   placeholder='배급수량'
   value={distribution}
   name="distribution"
-  onChange={getValue}
+  min='0'
+  onChange={(e) => {getValue(e); onChangeAmount2(e)}}
+  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 ></input>
-<br />
-<br></br>
+<div className="supplies-message">{amountMessage4}&nbsp;&nbsp;{amountMessage5}</div>
+<br/>
 </center>
+
 <center id="damage">
 &emsp;&ensp;&nbsp;&nbsp;파손수량 :
 <input
-className="number-input"
+className="supplies-number-input"
 type="text"
 placeholder='파손수량'
 value={damage}
 name="damage"
-onChange={getValue}
+min='0'
+onChange={(e) => {getValue(e); onChangeAmount3(e)}}
+onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 ></input>
-<br />
-<br></br>
+<div className="supplies-message">{amountMessage7}&nbsp;&nbsp;{amountMessage8}</div>
+<br/>
 </center>
+
 <center id="possibility">
 &emsp;&ensp;&nbsp;&nbsp;배급가능수량 :
 <input
-className="number-input"
+className="supplies-number-input"
 type="text"
 placeholder='배급가능수량'
 value={possibility}
 name="possibility"
-onChange={getValue}
+min='0'
+onChange={(e) => {getValue(e); onChangeAmount4(e)}}
 ></input>
-<br />
-<br></br>
+<div className="supplies-message">{amountMessage10}&nbsp;&nbsp;{amountMessage11}</div>
+<br/>
 </center>
                 <br></br>
-            <button  className ="add-btn" onClick={() => {dataInsert(); onReset()}}>등록</button>&nbsp;&nbsp;
+                <Link to="/supplies/main"> <button  className ="add-btn" onClick={() => {dataInsert(); onReset()}}>등록</button></Link>&nbsp;&nbsp;
             <Link to="/supplies/main"><button  className="cancel-btn">취소</button></Link><br></br>
             <br></br>
             <br/>
@@ -184,5 +292,6 @@ onChange={getValue}
 
 
 }
+
 
 export default Input;
