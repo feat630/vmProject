@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DaumPostcode from "react-daum-postcode";
+import PostCode from "./Test";
 
 const Input = (props) => {
   const [name, setName] = useState([]);
   const [gender, setGender] = useState([]);
   const [age, setAge] = useState([]);
+
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [isOpenPost, setIsOpenPost] = useState(false);
 
   const [nameMessage, setNameMessage] = useState("");
   const [nameMessage2, setNameMessage2] = useState("");
@@ -13,6 +19,15 @@ const Input = (props) => {
   const [ageMessage2, setAgeMessage2] = useState("");
 
   const navigate = useNavigate();
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    width: "400px",
+    height: "400px",
+    padding: "7px",
+  };
 
   const onChangeAge = (e) => {
     const { value } = e.target;
@@ -46,17 +61,23 @@ const Input = (props) => {
     }
   };
 
-  const dataInsert = () => {
+  const dataInsert = async () => {
     if (name.length === 0 || gender.length === 0 || age.length === 0) {
       alert("항목을 모두 입력해주세요.");
     } else {
       console.log(name);
       console.log(gender);
       console.log(age);
-      axios.post("http://localhost:4000/victim/register", {
-        data: { data: [name, gender, age] },
-      });
-      navigate("/victim");
+      const response = await axios.post(
+        "http://localhost:4000/victim/register",
+        {
+          data: { data: [name, gender, age] },
+        }
+      );
+      if (response.status === 200) {
+        alert("등록되었습니다.");
+        navigate("/victim");
+      }
     }
   };
 
@@ -72,6 +93,10 @@ const Input = (props) => {
       setGender(value);
     }
   };
+
+  useEffect(() => {
+    console.log(props.addr);
+  }, [props]);
 
   return (
     <>
@@ -141,6 +166,15 @@ const Input = (props) => {
           <div className="victim-message-edit">{ageMessage}</div>
           <div className="victim-message">{ageMessage2}</div>
         </div>
+        {/* <button onClick={onChangeOpenPost}>우편번호 검색</button>
+        {isOpenPost ? (
+          <DaumPostcode
+            style={postCodeStyle}
+            autoClose
+            onComplete={onCompletePost}
+          />
+        ) : null} */}
+        <PostCode />
       </div>
       <button
         onClick={() => {

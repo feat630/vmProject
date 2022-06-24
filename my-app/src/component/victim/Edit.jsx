@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./victim.css";
 
 const Edit = (props) => {
-  let [alert, setAlert] = useState(true);
+  let [alert2, setAlert2] = useState(true);
   const [victim, setVictim] = useState([]);
   const [name, setName] = useState([]);
   const [gender, setGender] = useState([]);
@@ -57,15 +57,19 @@ const Edit = (props) => {
     }
   };
 
-  const updateData = () => {
-    console.log("updateData!!!");
+  const updateData = async () => {
+    console.log("updateData 실행!!!");
     console.log(name);
     console.log(gender);
     console.log(age);
     console.log(id);
-    axios.post(`http://localhost:4000/victim/update`, {
+    const response = await axios.post(`http://localhost:4000/victim/update`, {
       data: { data: [name, gender, age, id] },
     });
+    if (response.status === 200) {
+      alert("수정되었습니다.");
+      navigate("/victim");
+    }
   };
 
   const getValue = (e) => {
@@ -84,10 +88,10 @@ const Edit = (props) => {
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      setAlert(false);
+      setAlert2(false);
     }, 100);
     fetchData();
-  }, [alert]);
+  }, [alert2]);
 
   return (
     <>
@@ -169,7 +173,7 @@ const Edit = (props) => {
         className="victim-btn"
         onClick={() => {
           updateData();
-          navigate("/victim");
+          // navigate("/victim");
         }}
       >
         수정완료

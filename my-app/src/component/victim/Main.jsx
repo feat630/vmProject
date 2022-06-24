@@ -9,6 +9,7 @@ export const Main = () => {
 
   const fetchDatas = async () => {
     const response = await axios.get("http://localhost:4000/victim/list");
+    console.log("fetchDatas response!!!!", response);
     console.log(response.data);
     const activeUsers = response.data.filter(
       (victim) => victim.delete_yn === "N"
