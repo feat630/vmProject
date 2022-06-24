@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./supplies.css";
 
@@ -27,24 +27,35 @@ const View = (props) => {
   console.log(supplies);
 
   let { no } = useParams();
-
+ 
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const response = await axios.get(
       `http://localhost:4000/supplies/detail/${no}`
     );
+    console.log(response);
+    if(supplies.delete_yn === "Y") {
+      alert("해당 데이터에 접근할 수 없습니다.");
+      navigate ("/supplies");
+    } else {
     // setSupplies(response.data);
     setSupplies(response.data[0]);
-  
+    }
   };
 
 
 
-  const dataDelete = () => {
-
-    axios.delete(`http://localhost:4000/supplies/delete/${no}`, {
+  const dataDelete = async() => {
+    if (window.confirm("삭제하시겠습니까?")) {
+   const response = await axios.post(`http://localhost:4000/supplies/delete/${no}`, {
       // data: {'data': [no]}
     });
+    if(response.status === 200) {
+      alert("삭제되었습니다.");
+      navigate ("/supplies");
+     }
+    }
     return;
   };
 

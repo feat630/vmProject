@@ -109,7 +109,7 @@ supplies.post("/update", (req, res) => {
    
 
 
-supplies.delete('/delete/:id', (req, res) => {
+supplies.post('/delete/:id', (req, res) => {
    const no = req.params.id;
    console.log(no);
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./supplies.css";
+import { response } from "express";
 
 const Update = (props) => {
     let [alert, setAlert] = useState(true);
@@ -160,7 +161,7 @@ const Update = (props) => {
     }
   };
 
-  const updateData = () => {
+  const updateData = async() => {
   
   console.log(name);
   console.log(type);
@@ -169,9 +170,13 @@ const Update = (props) => {
   console.log(distribution);
   console.log(damage);
  console.log(possibility);
+ console.log(no);
     axios.post(`http://localhost:4000/supplies/update`, {
       data: { data: [name ,type, place, total,distribution, damage,possibility,no] },
     });
+    if(response.status === 200) {
+      alert("수정되었습니다.");
+    }
   };
 
   const getValue = (e) => {

@@ -115,7 +115,7 @@ const onChangeMessage = (e) => {
     setPlaceMessage("");
   }
 };
-    const dataInsert = () => {
+    const dataInsert = async() => {
         console.log(type);
         console.log(name);
         console.log(place);
@@ -129,12 +129,15 @@ const onChangeMessage = (e) => {
       ) {alert('입력이 안되었습니다.')
            } else {
 
-		axios.post('http://localhost:4000/supplies/input',{
-			data: {'data': [type, name, place, total,distribution, damage,possibility]}
-		});
+	const response= await	axios.post('http://localhost:4000/supplies/input',{
+			data: {'data': [type, name, place, total,distribution, damage,possibility]},
+		}
+    );
+    if(response.status === 200) {
         console.log(name);
-        alert('등록되었습니다.')
+        alert('등록되었습니다.');
 	}
+}
 };
     
 
