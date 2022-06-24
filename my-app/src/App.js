@@ -21,8 +21,6 @@ import ShelterInput from "./component/shelter/Input";
 import TopMenu from "./component/TopMenu";
 import Footer from "./component/Footer";
 
-import Popup from "./component/victim/Test";
-
 class App extends Component {
   state = { username: null };
 
@@ -67,7 +65,6 @@ class App extends Component {
               path="/victim/update/:id"
               element={<VictimUpdate />}
             ></Route>
-            <Route exact path="/victim/popup" element={<Popup />}></Route>
           </Routes>
           <Footer />
         </BrowserRouter>

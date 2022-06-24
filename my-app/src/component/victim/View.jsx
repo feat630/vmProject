@@ -70,6 +70,10 @@ const View = (props) => {
           <td className="victim-table-detail">나이</td>
           <td>{victim.age}</td>
         </tr>
+        <tr>
+          <td className="victim-table-detail">주소</td>
+          <td>{victim.address}</td>
+        </tr>
       </table>
       <button
         className="victim-btn"
