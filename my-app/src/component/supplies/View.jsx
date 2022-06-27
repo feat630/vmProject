@@ -48,11 +48,13 @@ const View = (props) => {
 
   const dataDelete = async() => {
     if (window.confirm("삭제하시겠습니까?")) {
-   const response = await axios.post(`http://localhost:4000/supplies/delete/${no}`, {
-      // data: {'data': [no]}
-    });
-    if(response.status === 200) {
       alert("삭제되었습니다.");
+   const response = await axios.post(
+    `http://localhost:4000/supplies/delete/${no}`
+      // data: {'data': [no]}
+    );
+    if(response.status === 200) {
+     
       navigate ("/supplies");
      }
     }
@@ -167,7 +169,7 @@ name="possibility"
           <button
             className="delete-btn"
             onClick={() => {
-              dataDelete();
+              dataDelete(); 
             }}
           >
             삭제

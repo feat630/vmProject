@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 const Input= () => {
     const [read,setRead] =useState([]);
@@ -27,7 +27,8 @@ const Input= () => {
     const [amountMessage11, setAmountMessage11] = useState("");
     const [amountMessage12, setAmountMessage12] = useState("");
     const[numbermessage,setNumberMessage] = useState("");
-
+ 
+    const navigate = useNavigate();
    
 const fetchDatas =async() => {
     const response = await axios.get ('http://localhost:4000/supplies/main');
@@ -135,7 +136,7 @@ const onChangeMessage = (e) => {
       if (type.length ===0 || name.length === 0  || place.length ===0 ||
         total.length=== 0 || distribution.length === 0 || damage.length === 0 || possibility.length ===0
       ) {alert('입력이 안되었습니다.');
-      window.location.href = "/supplies/Input"
+      return;
            } else {
 
 	const response= await	axios.post('http://localhost:4000/supplies/input',{
@@ -145,6 +146,8 @@ const onChangeMessage = (e) => {
     if(response.status === 200) {
         console.log(name);
         alert('등록되었습니다.');
+        navigate("/supplies");
+    
 	}
 }
 };
@@ -171,16 +174,7 @@ const onChangeMessage = (e) => {
         } 
       };
 
-    const onReset = () => {
-        setType(""); 
-        setName("");
-        setPlace("");
-        setTotal("");
-        setDistribution("");
-        setDamage("");
-        setPossibility("");
-    }
-
+   
     useEffect(() => {
         fetchDatas();
     },[]);
@@ -293,7 +287,7 @@ onChange={(e) => {getValue(e); onChangeAmount4(e)}}
 <br/>
 </center>
                 <br></br>
-                <Link to="/supplies/main"> <button  className ="add-btn" onClick={() => {dataInsert(); onReset()}}>등록</button></Link>&nbsp;&nbsp;
+                <button  className ="add-btn" onClick={() => {dataInsert();}}>등록</button>&nbsp;&nbsp;
             <Link to="/supplies/main"><button  className="cancel-btn">취소</button></Link><br></br>
             <br></br>
             <br/>

@@ -41,11 +41,26 @@ class App extends Component {
               element={<ShelterInput />}
             ></Route>
 
-            <Route path="/supplies" element={<SuppliesMain />}></Route>
-            <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
-            <Route path="/supplies/input" element={<SuppliesInput />}></Route>
-            <Route path="/supplies/update/:no" element={<SuppliesUpdate />}></Route>
-            <Route path="/supplies/detail/:no" element={<SuppliesView />}></Route>
+            <Route
+              exact
+              path="/supplies/Main"
+              element={<SuppliesMain />}
+            ></Route>
+            <Route
+              exact
+              path="/supplies/input"
+              element={<SuppliesInput />}
+            ></Route>
+            <Route
+              exact
+              path="/supplies/update/:no"
+              element={<SuppliesUpdate />}
+            ></Route>
+            <Route
+              exact
+              path="/supplies/detail/:no"
+              element={<SuppliesView />}
+            ></Route>
 
             <Route exact path="/victim" element={<VictimMain />}></Route>
             <Route
