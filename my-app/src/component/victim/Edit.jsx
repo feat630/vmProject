@@ -113,7 +113,7 @@ const Edit = (props) => {
       return;
     }
 
-    const ageRegex = /^[0-9]{2}$/;
+    const ageRegex = /^[0-9]{1,2}$/;
     if (!ageRegex.test(age)) {
       alert("나이를 확인해주세요.");
       return;
