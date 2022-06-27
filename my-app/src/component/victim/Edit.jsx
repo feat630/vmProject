@@ -3,9 +3,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./victim.css";
+import DaumPostcode from "react-daum-postcode";
+import PopupDom from "./PopupDom";
+import PopupPostCode from "./PopupPostCode";
 
 const Edit = (props) => {
-  let [alert, setAlert] = useState(true);
+  let [alert2, setAlert2] = useState(true);
   const [victim, setVictim] = useState([]);
   const [name, setName] = useState([]);
   const [gender, setGender] = useState([]);
@@ -24,6 +27,24 @@ const Edit = (props) => {
 
   const navigate = useNavigate();
 
+  // 팝업창 상태 관리
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // 팝업창 열기
+  const openPostCode = () => {
+    setIsPopupOpen(true);
+  };
+
+  // 팝업창 닫기
+  const closePostCode = () => {
+    setIsPopupOpen(false);
+  };
+
+  const [address, setAddress] = useState(""); // 주소
+  const [addressDetail, setAddressDetail] = useState(""); // 상세주소
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
   const fetchData = async () => {
     console.log("fetchData 실행!!!");
     const response = await axios.get(
@@ -34,6 +55,7 @@ const Edit = (props) => {
     setName(victim.name);
     setGender(victim.gender);
     setAge(victim.age);
+    setAddress(victim.address);
   };
 
   const onChangeAge = (e) => {
@@ -57,15 +79,19 @@ const Edit = (props) => {
     }
   };
 
-  const updateData = () => {
-    console.log("updateData!!!");
+  const updateData = async () => {
+    console.log("updateData 실행!!!");
     console.log(name);
     console.log(gender);
     console.log(age);
     console.log(id);
-    axios.post(`http://localhost:4000/victim/update`, {
+    const response = await axios.post(`http://localhost:4000/victim/update`, {
       data: { data: [name, gender, age, id] },
     });
+    if (response.status === 200) {
+      alert("수정되었습니다.");
+      navigate("/victim");
+    }
   };
 
   const getValue = (e) => {
@@ -84,10 +110,10 @@ const Edit = (props) => {
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      setAlert(false);
+      setAlert2(false);
     }, 100);
     fetchData();
-  }, [alert]);
+  }, [alert2]);
 
   return (
     <>
@@ -164,12 +190,38 @@ const Edit = (props) => {
             <div className="victim-message-edit">{ageMessage}</div>
           </td>
         </tr>
+        <tr>
+          <td className="victim-table-detail">
+            <label>주소</label>
+          </td>
+          <td>
+            <div>
+              {/* // 버튼 클릭 시 팝업 생성 */}
+              <span style={{ marginRight: "5px" }}>주소:</span>
+              <button type="button" onClick={openPostCode}>
+                우편번호 검색
+              </button>
+              {/* // 팝업 생성 기준 div */}
+              <div id="popupDom">
+                {isPopupOpen && (
+                  <PopupDom>
+                    <PopupPostCode
+                      onClose={closePostCode}
+                      setAddress={setAddress}
+                    />
+                  </PopupDom>
+                )}
+              </div>
+            </div>
+            <div>{address}</div>
+          </td>
+        </tr>
       </table>
       <button
         className="victim-btn"
         onClick={() => {
           updateData();
-          navigate("/victim");
+          // navigate("/victim");
         }}
       >
         수정완료

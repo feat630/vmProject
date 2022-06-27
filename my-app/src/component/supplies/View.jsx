@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./supplies.css";
 
@@ -27,27 +27,36 @@ const View = (props) => {
   console.log(supplies);
 
   let { no } = useParams();
-
+ 
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const response = await axios.get(
       `http://localhost:4000/supplies/detail/${no}`
     );
+    console.log(response);
+    if(supplies.delete_yn === "Y") {
+      alert("해당 데이터에 접근할 수 없습니다.");
+      navigate ("/supplies");
+    } else {
     // setSupplies(response.data);
     setSupplies(response.data[0]);
-  
+    }
   };
 
 
 
-  const dataDelete = () => {
-
-    
-
-    axios.delete(`http://localhost:4000/supplies/delete/${no}`, {
+  const dataDelete = async() => {
+    if (window.confirm("삭제하시겠습니까?")) {
+   const response = await axios.post(`http://localhost:4000/supplies/delete/${no}`, {
       // data: {'data': [no]}
     });
-    fetchData();
+    if(response.status === 200) {
+      alert("삭제되었습니다.");
+      navigate ("/supplies");
+     }
+    }
+    return;
   };
 
 
@@ -75,7 +84,7 @@ const View = (props) => {
     <center id="name">
       &emsp;&ensp;&nbsp;&nbsp;배급품이름 :
       <input
-        className="text-input"
+        className="supplies-text-input"
         type="text"
         value={supplies.name}
         name="name"
@@ -86,7 +95,7 @@ const View = (props) => {
     <center id="place">
     &emsp;&ensp;&nbsp;&nbsp;제공기관 :
     <input
-      className="text-input"
+      className="supplies-text-input"
       type="text"
       value={supplies.place}
       name="place"
@@ -97,7 +106,7 @@ const View = (props) => {
   <center id="total">
   &emsp;&ensp;&nbsp;&nbsp;총 수량 :
   <input
-    className="number-input"
+    className="supplies-number-input"
     type="text"
     value={supplies.total}
     name="total"
@@ -108,7 +117,7 @@ const View = (props) => {
 <center id="distribution">
 &emsp;&ensp;&nbsp;&nbsp;배급수량 :
 <input
-  className="number-input"
+  className="supplies-number-input"
   type="text"
   value={supplies.distribution}
   name="distribution"
@@ -119,7 +128,7 @@ const View = (props) => {
 <center id="damage">
 &emsp;&ensp;&nbsp;&nbsp;파손수량 :
 <input
-className="number-input"
+className="supplies-number-input"
 type="text"
 value={supplies.damage}
 name="damage"
@@ -130,7 +139,7 @@ name="damage"
 <center id="possibility">
 &emsp;&ensp;&nbsp;&nbsp;배급가능수량 :
 <input
-className="number-input"
+className="supplies-number-input"
 type="text"
 value={supplies.possibility}
 name="possibility"

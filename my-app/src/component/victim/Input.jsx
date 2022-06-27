@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DaumPostcode from "react-daum-postcode";
+// import PostCode from "./Test";
+import DaumPost from "./DaumPost";
+import Modal from "react-modal";
+
+import PopupDom from "./PopupDom";
+import PopupPostCode from "./PopupPostCode";
 
 const Input = (props) => {
   const [name, setName] = useState([]);
@@ -13,6 +20,73 @@ const Input = (props) => {
   const [ageMessage2, setAgeMessage2] = useState("");
 
   const navigate = useNavigate();
+
+  // 팝업창 상태 관리
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // 팝업창 열기
+  const openPostCode = () => {
+    setIsPopupOpen(true);
+  };
+
+  // 팝업창 닫기
+  const closePostCode = () => {
+    setIsPopupOpen(false);
+  };
+
+  const [address, setAddress] = useState(""); // 주소
+  const [addressDetail, setAddressDetail] = useState(""); // 상세주소
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const toggle = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const changeHandler = (e) => {
+    setAddressDetail(e.target.value);
+  };
+
+  const clickHandler = () => {
+    if (addressDetail === "") {
+      alert("상세주소를 입력해주세요.");
+    } else {
+      console.log(address, addressDetail);
+    }
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddress = data.address;
+    let extraAddr = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddr +=
+          extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddr !== "" ? ` (${extraAddr})` : "";
+    }
+
+    setAddress(data.zonecode);
+    setAddressDetail(fullAddress);
+    setIsOpenPost(false);
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    width: "400px",
+    height: "400px",
+    padding: "7px",
+  };
 
   const onChangeAge = (e) => {
     const { value } = e.target;
@@ -46,17 +120,29 @@ const Input = (props) => {
     }
   };
 
-  const dataInsert = () => {
-    if (name.length === 0 || gender.length === 0 || age.length === 0) {
+  const dataInsert = async () => {
+    if (
+      name.length === 0 ||
+      gender.length === 0 ||
+      age.length === 0 ||
+      address.length === 0
+    ) {
       alert("항목을 모두 입력해주세요.");
     } else {
       console.log(name);
       console.log(gender);
       console.log(age);
-      axios.post("http://localhost:4000/victim/register", {
-        data: { data: [name, gender, age] },
-      });
-      navigate("/victim");
+      console.log(address);
+      const response = await axios.post(
+        "http://localhost:4000/victim/register",
+        {
+          data: { data: [name, gender, age, address] },
+        }
+      );
+      if (response.status === 200) {
+        alert("등록되었습니다.");
+        navigate("/victim");
+      }
     }
   };
 
@@ -72,6 +158,10 @@ const Input = (props) => {
       setGender(value);
     }
   };
+
+  useEffect(() => {
+    console.log(props.addr);
+  }, [props]);
 
   return (
     <>
@@ -141,6 +231,25 @@ const Input = (props) => {
           <div className="victim-message-edit">{ageMessage}</div>
           <div className="victim-message">{ageMessage2}</div>
         </div>
+        <div>
+          {/* // 버튼 클릭 시 팝업 생성 */}
+          <span style={{ marginRight: "5px" }}>주소:</span>
+          <button type="button" onClick={openPostCode}>
+            우편번호 검색
+          </button>
+          {/* // 팝업 생성 기준 div */}
+          <div id="popupDom">
+            {isPopupOpen && (
+              <PopupDom>
+                <PopupPostCode
+                  onClose={closePostCode}
+                  setAddress={setAddress}
+                />
+              </PopupDom>
+            )}
+          </div>
+        </div>
+        <div>{address}</div>
       </div>
       <button
         onClick={() => {

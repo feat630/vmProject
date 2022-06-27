@@ -3,7 +3,7 @@ const supplies = express.Router();
 const db = require('../dbconnection');
 
 supplies.get("/main", (req, res) => {
-  db.query("select no,type, name,place, total,distribution,damage,possibility from supplies", (err, rows) => {
+  db.query("select no,type, name,place, total,distribution,damage,possibility,delete_yn from supplies", (err, rows) => {
     if (!err) {
       res.send(rows);
     } else {
@@ -27,7 +27,7 @@ supplies.get('/main', (req,res) => {
 
 supplies.get("/detail/:id", (req, res) => {
   const no = req.params.id;
-  db.query("select type, name,place, total,distribution,damage,possibility from supplies where no = ?", [no], (err, rows) => {
+  db.query("select * from supplies where no = ?", [no], (err, rows) => {
     if (!err) {
       res.send(rows);
     } else {
@@ -109,9 +109,12 @@ supplies.post("/update", (req, res) => {
    
 
 
-supplies.delete('/delete/:id', (req, res) => {
+supplies.post('/delete/:id', (req, res) => {
    const no = req.params.id;
    console.log(no);
+
+   const deleteYn = "Y";
+
    // const name = req.body.data.data[0];
     //const quantity = req.body.data.data[1];
     
@@ -120,14 +123,16 @@ supplies.delete('/delete/:id', (req, res) => {
 
    const success =true;
 
-    db.query("delete from supplies where no=?", [no], (err, rows) => {
+    db.query("update supplies set delete_yn = ? where no=?",
+     [deleteYn, no], 
+     (err, rows) => {
         if(!err) {
             res.send(success);
             console.log('success')
         } else {
             console.log(`query error: ${err}`);
             res.send(err);
-            alert("삭제하기 실패했습니다.")
+            console.log("삭제하기 실패했습니다.")
         }
     })
 })

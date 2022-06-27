@@ -3,13 +3,10 @@ const victim = express.Router();
 const db = require("../dbconnection");
 
 victim.get("/list", (req, res) => {
-  // const success = "success";
-  // db.query("select * from victim", (err, rows) => {
   db.query(
-    "select victim_id, name, gender, age, delete_yn from victim",
+    "select victim_id, name, gender, age, address, delete_yn from victim",
     (err, rows) => {
       if (!err) {
-        // res.send(success);
         res.send(rows);
       } else {
         console.log(`query error: ${err}`);
@@ -22,7 +19,7 @@ victim.get("/list", (req, res) => {
 victim.get("/detail/:id", (req, res) => {
   const victimId = req.params.id;
   db.query(
-    "select * from victim where victim_id = ?",
+    "select victim_id, name, gender, age, address, delete_yn from victim where victim_id = ?",
     [victimId],
     (err, rows) => {
       if (!err) {
@@ -39,16 +36,18 @@ victim.post("/register", (req, res) => {
   const name = req.body.data.data[0];
   const gender = req.body.data.data[1];
   const age = req.body.data.data[2];
+  const address = req.body.data.data[3];
 
   console.log(name);
   console.log(gender);
   console.log(age);
+  console.log(address);
 
   const success = true;
 
   db.query(
-    "insert into victim(name, gender, age) values(?, ?, ?)",
-    [name, gender, age],
+    "insert into victim(name, gender, age, address) values(?, ?, ?, ?)",
+    [name, gender, age, address],
     (err, rows) => {
       if (!err) {
         res.send(success);
