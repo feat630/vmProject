@@ -10,7 +10,7 @@ import VictimUpdate from "./component/victim/Edit";
 import SuppliesMain from "./component/supplies/Main";
 import SuppliesInput from "./component/supplies/Input";
 import SuppliesView from "./component/supplies/View";
-// import SuppliesUpdate from "./component/supplies/Update";
+import SuppliesUpdate from "./component/supplies/Update";
 
 import Main from "./component/Main";
 import Login from "./component/Login";
@@ -44,10 +44,8 @@ class App extends Component {
             <Route path="/supplies" element={<SuppliesMain />}></Route>
             <Route path="/supplies/Main" element={<SuppliesMain />}></Route>
             <Route path="/supplies/input" element={<SuppliesInput />}></Route>
-            <Route
-              path="/supplies/detail/:no"
-              element={<SuppliesView />}
-            ></Route>
+            <Route path="/supplies/update/:no" element={<SuppliesUpdate />}></Route>
+            <Route path="/supplies/detail/:no" element={<SuppliesView />}></Route>
 
             <Route exact path="/victim" element={<VictimMain />}></Route>
             <Route
