@@ -100,21 +100,29 @@ const onChangeAmount4= (e) => {
 const onChangeText = (e) => {
   const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
   if (!nameRegex.test(e.target.value)) {
+    alert("문자만 입력 가능합니다.")
     setNameMessage("문자만 입력 가능합니다.");
+    setName("");
   } else {
     setNameMessage("");
   }
 };
 
-
 const onChangeMessage = (e) => {
   const placeRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
-  if (!placeRegex.test(e.target.value)) {
+ // const regExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/;
+  if ((!placeRegex.test(e.target.value))) {
+    alert("문자만 입력 가능합니다.")
     setPlaceMessage("문자만 입력 가능합니다.");
+    setPlace("");
   } else {
     setPlaceMessage("");
   }
+
 };
+
+
+
     const dataInsert = async() => {
         console.log(type);
         console.log(name);
@@ -124,9 +132,10 @@ const onChangeMessage = (e) => {
         console.log(damage);
         console.log(possibility);
      
-      if (name.length === 0  || place.length ===0 ||
+      if (type.length ===0 || name.length === 0  || place.length ===0 ||
         total.length=== 0 || distribution.length === 0 || damage.length === 0 || possibility.length ===0
-      ) {alert('입력이 안되었습니다.')
+      ) {alert('입력이 안되었습니다.');
+      window.location.href = "/supplies/Input"
            } else {
 
 	const response= await	axios.post('http://localhost:4000/supplies/input',{
