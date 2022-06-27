@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 // import PostCode from "./Test";
 import DaumPost from "./DaumPost";
-import Modal from "react-modal";
 
 import PopupDom from "./PopupDom";
 import PopupPostCode from "./PopupPostCode";
