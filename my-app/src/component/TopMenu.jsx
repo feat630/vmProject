@@ -9,17 +9,14 @@ export const TopMenu = () => {
     const fetchDatas = async() => {
         const response = await axios.get('http://localhost:4000/login/status', { withCredentials: true });
         setIsLogn(response.data.id);
-        console.log(isLogin)
     }
 
     const logout = async() => {
         const response = await axios.get('http://localhost:4000/login/logout', { withCredentials: true });
         setIsLogn(...isLogin, response.data.id);
-        console.log(isLogin)
     }
 
     useEffect(() => {
-        console.log(isLogin)
         fetchDatas();
     },[isLogin]);
 
