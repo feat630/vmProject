@@ -46,8 +46,7 @@ shelter.post('/postData', (req, res) => {
 
     db.query("insert into shelter(shelter_name, shelter_quantity, shelter_category, shelter_address, shelter_tel) values(?, ?, ?, ?, ?)", [name, quantity, category, address, tel], (err, rows) => {
         if(!err) {
-            // res.send(rows);
-            console.log('success')
+            res.send(true);
         } else {
             console.log(`query error: ${err}`);
             res.send(err);
@@ -60,7 +59,7 @@ shelter.post('/deleteData', (req, res) => {
 
     db.query("update shelter set del_yn = true, upt_date = now() where shelter_id = ?", [id], (err, rows) => {
         if(!err) {
-            // res.send(rows);
+            res.send(true);
             console.log('success')
         } else {
             console.log(`query error: ${err}`);
@@ -79,7 +78,7 @@ shelter.post('/updateData', (req, res) => {
 
     db.query("update shelter set shelter_name = ?, shelter_quantity = ?, shelter_category = ?, shelter_address = ?, shelter_tel = ?, upt_date = now() where shelter_id = ?", [name, quantity, category, address, tel,id], (err, rows) => {
         if(!err) {
-            // res.send(rows);
+            res.send(true);
             console.log('success')
         } else {
             console.log(`query error: ${err}`);

@@ -4,15 +4,7 @@ import axios from "axios";
 
 export const Main = () => {
     let navigate = useNavigate();
-
     const [read, setRead] = useState([]);
-    const [upt, setUpt] = useState(false);
-
-    const fetchDatas = async() => {
-        const response = await axios.get('http://localhost:4000/shelter/getData', { withCredentials: true });
-        setRead(response.data.rows);
-        setUpt(true);
-    }
 
     const telReg = (telnum) => {
         var number = telnum.replace(/[^0-9]/g, "");
@@ -54,11 +46,15 @@ export const Main = () => {
         }
     }
 
+    const fetchDatas = async() => {
+        const response = await axios.get('http://localhost:4000/shelter/getData', { withCredentials: true });
+        await setRead(response.data.rows);
+    }
+
     useEffect(() => {
-        
         loginCheck();
         fetchDatas();
-    },[upt]);
+    },[]);
  
     return (
         <>
