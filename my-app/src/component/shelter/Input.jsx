@@ -25,8 +25,24 @@ export const Input = () => {
         }
     }
 
+    const regSpecial = (str, name, input) => { 
+        const regExp = /[\sa-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+        if(regExp.test(str)) {
+
+        }else{
+            if(str === '' || str == null){
+
+            } else {
+                alert("특수문자는 입력이 불가합니다")
+                input.value=null;
+            }
+        } 
+    }
+
     const getValue = (e) => {
 		const { name, value } = e.target;
+        regSpecial(value.slice(value.length-1, value.length, e.target), name)
+        
     	if(name === 'name') {
 			setName(value);
 		} else if(name === 'quantity') {
@@ -40,13 +56,13 @@ export const Input = () => {
 		}
 	}
 
-    const dataInsert = () => {
+    const dataInsert = async() => {
         if(name === "" || quantity === "" || category === "" || address === "" || tel === ""){
             alert("모두 입력해주세요")
         } else if(name == null || quantity == null || category == null || address == null || tel == null){
             alert("모두 입력해주세요")
         } else {
-            axios.post('/shelter/postData',{
+            await axios.post('/shelter/postData',{
                 data: {'data': [
                     name,
                     quantity,
@@ -55,18 +71,17 @@ export const Input = () => {
                     tel]
                 }
             });
-            console.log("nav")
             navigate("/shelter");
         }
     }
 
-    const dataUpdate = () => {
+    const dataUpdate = async() => {
         if(name === "" || quantity === "" || category === "" || address === "" || tel === ""){
             alert("모두 입력해주세요")
         } else if(name == null || quantity == null || category == null || address == null || tel == null){
             alert("모두 입력해주세요")
         } else {
-            axios.post('/shelter/updateData',{
+            await axios.post('/shelter/updateData',{
                 data: {'data': [
                     index,
                     name,
@@ -91,13 +106,17 @@ export const Input = () => {
         }
     }
 
-    const maxLengthCheck = (tel) => {
-        if(tel==null){
-
-        } else if (tel.length > 11) {
-            setTel(tel.slice(0, 11));
-        }
-        
+    const maxLengthCheck = (num, name) => {
+        if(num==null){
+            // console.log(num)
+        } else if (num.length > 11) {
+            if(name==="tel"){
+                setTel(num.slice(0, 11));
+            } else if(name==="quantity"){
+                setQuantity(num.slice(0, 11));
+            }
+            
+        } 
     }
 
     useEffect( () => {
@@ -130,6 +149,7 @@ export const Input = () => {
                         value={quantity}
                         onChange={getValue}
                         name='quantity'
+                        oninput={maxLengthCheck(quantity, 'quantity')}
                     >
                     </input><br/><br/>
                 카테고리<br/>
@@ -160,7 +180,7 @@ export const Input = () => {
                         value={tel}
                         onChange={getValue}
                         name='tel'
-                        oninput={maxLengthCheck(tel)}
+                        oninput={maxLengthCheck(tel, 'tel')}
                     >
                     </input><br/><br/>
                     

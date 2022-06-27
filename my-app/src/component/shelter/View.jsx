@@ -13,12 +13,13 @@ export const View = () => {
         await setRead(response.data);
     }
 
-    const dataDelete = (v) => {
-        axios.post('/shelter/deleteData',{
+    const dataDelete = async(v) => {
+        await axios.post('/shelter/deleteData',{
 			data: {'data': [
 				v.shelter_id]
 			}
 		});
+        navigate("/shelter");
     }
 
     const telReg = (telnum) => {
@@ -62,6 +63,7 @@ export const View = () => {
     }
 
     useEffect( () => {
+        loginCheck();
         fetchDatas();
     }, [])
 
@@ -102,7 +104,7 @@ export const View = () => {
                         </tbody>
                     </table>
                     <Link to={`/shelter/input/${v.shelter_id}`}><button>수정</button></Link>
-                    <Link to="/shelter"><button onClick={() => {dataDelete(v)}}>삭제</button></Link>
+                    <button onClick={() => {dataDelete(v)}}>삭제</button>
                     <br/><br/>
                 </>
             ))}
