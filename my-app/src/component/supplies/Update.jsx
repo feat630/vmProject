@@ -91,7 +91,7 @@ const Update = (props) => {
     }
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    setAmount(onlyNumber);
+    setTotal(onlyNumber);
   };
   
   const onChangeAmount2= (e) => {
@@ -99,14 +99,13 @@ const Update = (props) => {
     const amountRegex2 = /^[0-9]*$/;
     if (!amountRegex2.test(e.target.value)) {
       setAmountMessage4("숫자만 입력 가능합니다.");
+      setDistribution("");
     } else if (e.target.value < 0 ) {
       setAmountMessage5("0부터 입력 가능합니다.");
+      setDistribution("");
     }  else {
       setAmountMessage6("")
     }
-    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
-    const onlyNumber2 = value2.replace(/[^0-9]/g, "");
-    setAmount(onlyNumber2);
   };
   
   
@@ -115,14 +114,12 @@ const Update = (props) => {
     const amountRegex3 = /^[0-9]*$/;
     if (!amountRegex3.test(e.target.value)) {
       setAmountMessage7("숫자만 입력 가능합니다.");
+      setDamage("");
     } else if (e.target.value < 0 ) {
       setAmountMessage8("0부터 입력 가능합니다.");
     }  else {
       setAmountMessage9("")
     }
-    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
-    const onlyNumber3 = value3.replace(/[^0-9]/g, "");
-    setAmount(onlyNumber3);
   };
   
   const onChangeAmount4= (e) => {
@@ -137,7 +134,7 @@ const Update = (props) => {
     }
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber4 = value.replace(/[^0-9]/g, "");
-    setAmount(onlyNumber4);
+    setPossibility(onlyNumber4);
   };
   
       
@@ -146,6 +143,7 @@ const Update = (props) => {
     const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
     if (!nameRegex.test(e.target.value)) {
       setNameMessage("문자만 입력 가능합니다.");
+      setName("");
     } else {
       setNameMessage("");
     }
@@ -156,6 +154,7 @@ const Update = (props) => {
     const placeRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
     if (!placeRegex.test(e.target.value)) {
       setPlaceMessage("문자만 입력 가능합니다.");
+      setPlace("");
     } else {
       setPlaceMessage("");
     }
@@ -171,12 +170,20 @@ const Update = (props) => {
   console.log(damage);
  console.log(possibility);
  console.log(no);
+
+ if ( type.length ===0 || name.length === 0  || place.length ===0 ||
+  total.length=== 0 || distribution.length === 0 || damage.length === 0 || possibility.length ===0
+) {alert('필수입력칸입니다');
+navigate ("/supplies/update");
+     } else {
     const response = axios.post(`http://localhost:4000/supplies/update`, {
-      data: { data: [name ,type, place, total,distribution, damage,possibility,no] },
+       data: { data: [name ,type, place, total,distribution, damage,possibility,no] },
+      // alert("변경되었습니다");
     });
     if(response.status === 200) {
       alert("수정되었습니다.");
     }
+  }
   };
 
   const getValue = (e) => {
@@ -319,21 +326,19 @@ onChange={(e) => {getValue(e); onChangeAmount4(e)}}
       <br></br>
       <br></br>
       <center>
-        <Link to="/supplies/main">
           <button
             type="submit"
             className="change-btn"
             onClick={() => {
               updateData();
-              alert("변경되었습니다");
+             
             }}
           >
             변경
           </button>
-        </Link>
         &nbsp;&nbsp;
         <Link to="/supplies/main">
-          <button className="cancel-btn">취소</button>
+          <button className="cancel-btn">돌아가기</button>
         </Link>
         <br></br>
       </center>
