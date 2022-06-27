@@ -94,6 +94,8 @@ const Edit = (props) => {
     // value의 값이 문자가 아닐경우 빈문자열로 replace 해버림.
     const onlyString = value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, "");
     setName(onlyString);
+    const numOfchr = value.substr(0, 5);
+    setName(numOfchr);
   };
 
   const updateData = async () => {
@@ -107,7 +109,7 @@ const Edit = (props) => {
       return;
     }
 
-    const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]{2,5}$/;
+    const nameRegex = /^[가-힣a-zA-Z]{2,5}$/;
     if (!nameRegex.test(name)) {
       alert("이름을 확인해주세요.");
       return;
