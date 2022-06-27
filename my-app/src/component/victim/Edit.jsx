@@ -15,7 +15,9 @@ const Edit = (props) => {
   const [age, setAge] = useState([]);
 
   const [nameMessage, setNameMessage] = useState("");
+  const [nameMessage2, setNameMessage2] = useState("");
   const [ageMessage, setAgeMessage] = useState("");
+  const [ageMessage2, setAgeMessage2] = useState("");
 
   // console.log(name);
   // console.log(gender);
@@ -60,11 +62,16 @@ const Edit = (props) => {
 
   const onChangeAge = (e) => {
     const { value } = e.target;
-    const ageRegex = /^[0-9]+$/;
+    const ageRegex = /^[0-9]*$/;
     if (!ageRegex.test(e.target.value)) {
       setAgeMessage("숫자만 입력 가능합니다.");
     } else {
       setAgeMessage("");
+    }
+    if (e.target.value <= 0 || e.target.value > 100) {
+      setAgeMessage2("1부터 100까지 입력 가능합니다.");
+    } else {
+      setAgeMessage2("");
     }
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
@@ -72,14 +79,46 @@ const Edit = (props) => {
   };
 
   const onChangeName = (e) => {
+    const { value } = e.target;
+    const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
+    if (!nameRegex.test(e.target.value)) {
+      setNameMessage2("문자만 입력 가능합니다.");
+    } else {
+      setNameMessage2("");
+    }
     if (e.target.value.length < 2 || e.target.value.length > 5) {
       setNameMessage("2글자 이상 5글자 이하로 입력해주세요.");
     } else {
       setNameMessage("");
     }
+    // value의 값이 문자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyString = value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, "");
+    setName(onlyString);
   };
 
   const updateData = async () => {
+    if (
+      name.length === 0 ||
+      gender.length === 0 ||
+      age.length === 0 ||
+      address.length === 0
+    ) {
+      alert("항목을 모두 입력해주세요.");
+      return;
+    }
+
+    const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]{2,5}$/;
+    if (!nameRegex.test(name)) {
+      alert("이름을 확인해주세요.");
+      return;
+    }
+
+    const ageRegex = /^[0-9]{2}$/;
+    if (!ageRegex.test(age)) {
+      alert("나이를 확인해주세요.");
+      return;
+    }
+
     console.log("updateData 실행!!!");
     console.log(name);
     console.log(gender);
@@ -135,6 +174,7 @@ const Edit = (props) => {
               }}
               name="name"
             ></input>
+            <div className="victim-message-edit">{nameMessage2}</div>
             <div className="victim-message-edit">{nameMessage}</div>
           </td>
         </tr>
@@ -188,6 +228,7 @@ const Edit = (props) => {
               name="age"
             ></input>
             <div className="victim-message-edit">{ageMessage}</div>
+            <div className="victim-message-edit">{ageMessage2}</div>
           </td>
         </tr>
         <tr>

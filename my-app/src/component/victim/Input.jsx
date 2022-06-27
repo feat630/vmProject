@@ -102,6 +102,7 @@ const Input = (props) => {
   };
 
   const onChangeName = (e) => {
+    const { value } = e.target;
     const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/;
     if (!nameRegex.test(e.target.value)) {
       setNameMessage2("문자만 입력 가능합니다.");
@@ -113,6 +114,9 @@ const Input = (props) => {
     } else {
       setNameMessage("");
     }
+    // value의 값이 문자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyString = value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, "");
+    setName(onlyString);
   };
 
   const dataInsert = async () => {
@@ -123,21 +127,31 @@ const Input = (props) => {
       address.length === 0
     ) {
       alert("항목을 모두 입력해주세요.");
-    } else {
-      console.log(name);
-      console.log(gender);
-      console.log(age);
-      console.log(address);
-      const response = await axios.post(
-        "http://localhost:4000/victim/register",
-        {
-          data: { data: [name, gender, age, address] },
-        }
-      );
-      if (response.status === 200) {
-        alert("등록되었습니다.");
-        navigate("/victim");
-      }
+      return;
+    }
+
+    const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z]{2,5}$/;
+    if (!nameRegex.test(name)) {
+      alert("이름을 확인해주세요.");
+      return;
+    }
+
+    const ageRegex = /^[0-9]{2}$/;
+    if (!ageRegex.test(age)) {
+      alert("나이를 확인해주세요.");
+      return;
+    }
+
+    console.log(name);
+    console.log(gender);
+    console.log(age);
+    console.log(address);
+    const response = await axios.post("http://localhost:4000/victim/register", {
+      data: { data: [name, gender, age, address] },
+    });
+    if (response.status === 200) {
+      alert("등록되었습니다.");
+      navigate("/victim");
     }
   };
 
